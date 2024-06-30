@@ -1,6 +1,6 @@
 /* Imports */
 import { findPlayerBySid } from "../UTILS/FindPlayerBySID";
-import { updatePlayer } from "./updatePlayer"
+import { updatePlayer } from "./updatePlayer";
 
 /* Player Manager class */
 export class Players {
@@ -24,11 +24,18 @@ export class Players {
     }
 
     public updatePlayers(data) {
+      //we need to unrender all the players, and rerender players in range
+      for(let i = 0; i < this.players.length; ++i) {
+        var tmpPlayer: any = this.players[i];
+
+        tmpPlayer.visible = false;
+      }
+
       for(let i = 0; i < data.length; i += 13) {
         var tmpPlayer: any = findPlayerBySid(data[0]);
 
         if(tmpPlayer) {
-          updatePlayer(tmpPlayer);
+          updatePlayer(tmpPlayer, data, i);
         }
       }
     }

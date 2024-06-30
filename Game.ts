@@ -48,4 +48,19 @@ WebSocket.prototype.send = function(packet: any): void {
     (ws as any).ws.send(packet);
 };
 
-class Game extends WS {}
+export class Game extends WS {
+    public player: any;
+    public enemy: any;
+    public teammate: any;
+    public enemies: any[] = [];
+    public teammates: any[] = [];
+
+    private static instance: Game;
+
+    public static getInstance(): Game {
+        if (!Game.instance) {
+          Game.instance = new Game();
+        }
+        return Game.instance;
+    }
+}
