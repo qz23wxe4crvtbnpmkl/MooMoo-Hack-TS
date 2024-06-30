@@ -1,3 +1,4 @@
+//self explanatory (hopefully
 export const {
     sin,
     cos,
