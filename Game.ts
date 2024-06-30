@@ -18,9 +18,9 @@ class WS extends Msgpack {
         this.ws = null;
     }
 
-    public send(type: string,...data: any[]): void {
+    public send(type: string, ...data: any[]): void {
         if (!this.ws) {
-            throw new Error("WebSocket is not initialized");
+            throw new Error("[*] WebSocket is not initialized");
         }
         this.ws.send(this.encode([type,...data]));
     }
