@@ -1,3 +1,5 @@
+alert("MooMoo TS Loaded")
+
 /**
  * Imports the msgpack library
  */
