@@ -1,7 +1,7 @@
 /**
  * Imports the ObjectManager class
  */
-import { ObjectManager } from "../Buildings/BuildingManager.ts";
+import { ObjectManager } from "../Buildings/BuildingManager";
 
 /**
  * Gets the gameObjects array from the ObjectManager instance

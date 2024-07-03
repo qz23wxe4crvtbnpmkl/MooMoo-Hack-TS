@@ -1,7 +1,7 @@
 /**
  * Imports the hypot function from the Math module
  */
-import { hypot } from "../Math.ts";
+import { hypot } from "../Math";
 
 /**
  * Calculates the distance between two objects

@@ -1,7 +1,7 @@
 /**
  * Imports the atan2 function from the Math module
  */
-import { atan2 } from "../Math.ts";
+import { atan2 } from "../Math";
 
 /**
  * Calculates the direction from obj1 to obj2

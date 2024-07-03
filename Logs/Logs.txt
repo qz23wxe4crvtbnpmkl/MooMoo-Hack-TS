@@ -1,9 +1,0 @@
-export class Logs {
-    public logs: any[] = [];
-
-    public addLog(log) {
-        this.logs.push(log);
-    }
-
-    public renderLogs
-}

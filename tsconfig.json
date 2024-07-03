@@ -2,6 +2,6 @@
     "compilerOptions": {
       "target": "ES5",
       "module": "CommonJS",
-      "sourceMap": true
+      "outDir": "./compiled"
     }
   }
