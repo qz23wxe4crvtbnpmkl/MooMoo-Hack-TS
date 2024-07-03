@@ -1,11 +1,7 @@
-alert("MooMoo TS Loaded")
-
 /**
  * Imports the msgpack library
  */
-const msgpack = require("msgpack");
-
-alert("MooMoo TS Loaded")
+//const msgpack = require("msgpack");
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -56,10 +52,11 @@ class WS extends Msgpack {
    * @param {...any[]} data The data to send
    */
   public send(type: string, ...data: any[]): void {
-    console.log(this.ws);
     if (!this.ws) {
       throw new Error("[*] WebSocket is not initialized");
     }
+
+    console.log(...data);
     this.ws.send(this.encode([type, ...data]));
   }
 
@@ -75,7 +72,7 @@ class WS extends Msgpack {
     const packetData = parsed[1];
 
     if (type === "a") {
-      this.send("6", "ITS WORKING");
+      this.send("6", "wow");
     }
   }
 }
@@ -83,14 +80,19 @@ class WS extends Msgpack {
 /**
  * Monkey patches the WebSocket prototype to add a custom send method
  */
+WebSocket.prototype.send2 = WebSocket.prototype.send // so it won't call itself each time
 WebSocket.prototype.send = function(packet: any): void {
   if (!this.mod) {
     this.mod = new WS();
+
+    this.mod.ws = this;
+
     this.addEventListener("message", (msg) => {
       this.mod.handlePackets(msg.data);
     });
   }
-  this.mod.send(packet);
+
+  this.send2(packet);
 };
 
 /**
@@ -122,3 +124,5 @@ export class Game extends WS {
 }
 
 var Mod = Game.getInstance();
+
+alert("MooMoo TS Loaded");

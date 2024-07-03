@@ -1,3 +1,7 @@
+/**
+ * Imports the msgpack library
+ */
+//const msgpack = require("msgpack");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -22,12 +26,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-alert("MooMoo TS Loaded");
-/**
- * Imports the msgpack library
- */
-var msgpack = require("msgpack");
-alert("MooMoo TS Loaded");
 /**
  * A class for encoding and decoding data using MessagePack
  */
@@ -78,10 +76,10 @@ var WS = /** @class */ (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             data[_i - 1] = arguments[_i];
         }
-        console.log(this.ws);
         if (!this.ws) {
             throw new Error("[*] WebSocket is not initialized");
         }
+        console.log.apply(console, data);
         this.ws.send(this.encode(__spreadArray([type], data, true)));
     };
     /**
@@ -103,15 +101,17 @@ var WS = /** @class */ (function (_super) {
 /**
  * Monkey patches the WebSocket prototype to add a custom send method
  */
+WebSocket.prototype.send2 = WebSocket.prototype.send; // so it won't call itself each time
 WebSocket.prototype.send = function (packet) {
     var _this = this;
     if (!this.mod) {
         this.mod = new WS();
+        this.mod.ws = this;
         this.addEventListener("message", function (msg) {
             _this.mod.handlePackets(msg.data);
         });
     }
-    this.mod.send(packet);
+    this.send2(packet);
 };
 /**
  * The Game class, which extends WS and adds game-specific properties and methods
@@ -137,5 +137,6 @@ var Game = /** @class */ (function (_super) {
     };
     return Game;
 }(WS));
-export { Game };
+//export { Game };
 var Mod = Game.getInstance();
+alert("MooMoo TS Loaded");

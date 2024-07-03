@@ -1,8 +1,9 @@
 /**
  * Imports
  */
-import { findPlayerBySid } from "../UTILS/FindPlayerBySID"; // Import function to find a player by their session ID
+import { findPlayerBySid } from "../UTILS/FindPlayerBySID"; // Import function to find a player by their SID
 import { updatePlayer } from "./updatePlayer"; // Import function to update a player's information
+import { Player } from "./Player"; // Import player class
 
 /**
  * Player Manager class
@@ -39,23 +40,29 @@ export class Players {
   /**
    * Adds a player to the collection
    * 
-   * @param {any} Player The player to add
+   * @param {number} SID The SID for the player
+   * @param {any[]} data The player's data
    * @memberOf Players
-   * @example players.addPlayer(new Player('John Doe', 123));
+   * @example players.addPlayer(1, { name: "Onion", skin: "__proto__"});
    */
-  public addPlayer(Player) {
+  public addPlayer(sid: number, ...data) {
+    var tmpObj = new Player(sid);
+
+    // INIT:
+    tmpObj.init(...data);
+
     this.players.push(Player);
   }
 
   /**
    * Removes a player from the collection
    * 
-   * @param {any} Player The player to remove
+   * @param {number} sid The SID for the player to remove
    * @memberOf Players
-   * @example players.removePlayer(player);
+   * @example players.removePlayer(10);
    */
-  public removePlayer(Player) {
-    const index: number = this.players.indexOf(this.players.find((player) => player.sid === Player.sid), 0);
+  public removePlayer(sid: number) {
+    const index: number = this.players.indexOf(this.players.find((player) => player.sid === sid), 0);
     delete this.players[index];
   }
 

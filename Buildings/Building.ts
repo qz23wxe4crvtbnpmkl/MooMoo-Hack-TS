@@ -1,3 +1,5 @@
+import { findPlayerBySid  } from "../UTILS/FindPlayerBySID";
+
 /* Building class */
 export class Building {
     private sid: number;
@@ -17,6 +19,7 @@ export class Building {
     private wiggle: any;
     private isItem: boolean;
     private objectType: any;
+    public isTeamObject: any;
 
     constructor(sid: number) {
         this.sid = sid;
@@ -36,6 +39,7 @@ export class Building {
         this.group = data.group;
         this.owner = owner;
         this.isFake = isFake;
+        this.isAlive = true;
 
         this.wiggle = {
             x: 0,
@@ -45,5 +49,9 @@ export class Building {
         this.objectType = data.trap || data.dmg || data.teleport;
         this.maxHealth = data.health;
         this.buildHealth = this.maxHealth;
+
+        this.isTeamObject = (tmpObj) => {
+            return (tmpObj.sid === this.owner?.sid || this.isTeam(findPlayerBySid(tmpObj)))
+        }
     }
 }
