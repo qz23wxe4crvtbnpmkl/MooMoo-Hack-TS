@@ -3,6 +3,8 @@
  */
 const msgpack = require("msgpack");
 
+alert("MooMoo TS Loaded")
+
 /**
  * A class for encoding and decoding data using MessagePack
  */
