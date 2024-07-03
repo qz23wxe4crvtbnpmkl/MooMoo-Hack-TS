@@ -55,12 +55,12 @@ class WS extends Msgpack {
    * @param {string} type The type of packet
    * @param {...any[]} data The data to send
    */
-  public send(type: string,...data: any[]): void {
+  public send(type: string, ...data: any[]): void {
     console.log(this.ws);
     if (!this.ws) {
       throw new Error("[*] WebSocket is not initialized");
     }
-    this.ws.send(this.encode([type,...data]));
+    this.ws.send(this.encode([type, ...data]));
   }
 
   /**
@@ -84,16 +84,13 @@ class WS extends Msgpack {
  * Monkey patches the WebSocket prototype to add a custom send method
  */
 WebSocket.prototype.send = function(packet: any): void {
-  const ws = this;
-  if (!(ws as any).ws) {
-    (ws as any).ws = new WS();
-    ws.addEventListener("message", (msg) => {
-      (ws as any).ws.handlePackets(msg.data);
+  if (!this.mod) {
+    this.mod = new WS();
+    this.addEventListener("message", (msg) => {
+      this.mod.handlePackets(msg.data);
     });
   }
-  (ws as any).ws.send(packet);
-
-  return this;
+  this.mod.send(packet);
 };
 
 /**
@@ -123,3 +120,5 @@ export class Game extends WS {
     return Game.instance;
   }
 }
+
+var Mod = Game.getInstance();
