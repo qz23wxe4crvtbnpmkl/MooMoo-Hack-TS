@@ -39,7 +39,7 @@ class WS extends Msgpack {
   /**
    * The WebSocket object
    */
-  private ws: WebSocket | null;
+  public ws: WebSocket | null;
 
   /**
    * Constructor
@@ -56,6 +56,7 @@ class WS extends Msgpack {
    * @param {...any[]} data The data to send
    */
   public send(type: string,...data: any[]): void {
+    console.log(this.ws);
     if (!this.ws) {
       throw new Error("[*] WebSocket is not initialized");
     }
@@ -91,6 +92,8 @@ WebSocket.prototype.send = function(packet: any): void {
     });
   }
   (ws as any).ws.send(packet);
+
+  return this;
 };
 
 /**
