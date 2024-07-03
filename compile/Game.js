@@ -23,9 +23,10 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+alert("MooMoo TS Loaded");
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Game = void 0;
-alert("MooMoo TS Loaded");
 /**
  * Imports the msgpack library
  */
