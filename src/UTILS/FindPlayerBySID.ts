@@ -1,7 +1,7 @@
 /**
  * Imports the Players class
  */
-import Players from "../Players/PlayerManager";
+import { Players } from "../Players/PlayerManager";
 
 /**
  * Gets the players array from the Players instance
@@ -20,5 +20,5 @@ export function findPlayerBySid(sid: number) {
   /**
    * Uses the find method to search the players array for a player with a matching SID
    */
-  return players.find((player) => player.sid === sid);
+  return players.players.find((player) => player.sid === sid);
 }

@@ -1,8 +1,8 @@
 /**
  * Imports
  */
-import { findPlayerBySid } from "../UTILS/FindPlayerBySID"; // Import function to find a player by their SID
-import { updatePlayer } from "./updatePlayer"; // Import function to update a player's information
+//import { findPlayerBySid } from "../UTILS/FindPlayerBySID"; // Import function to find a player by their SID
+//import { updatePlayer } from "./updatePlayer"; // Import function to update a player's information
 import { Player } from "./Player"; // Import player class
 
 /**
@@ -21,12 +21,12 @@ export class Players {
   /**
    * Array of players
    */
-  public players: any[];
+  public players: any[] = [];
 
   /**
    * My player
    */
-  public myPlayer: any;
+  public static myPlayer: any = {};
 
   /**
    * Gets the singleton instance of the Players class
@@ -86,11 +86,11 @@ export class Players {
     }
 
     for (let i = 0; i < data.length; i += 13) {
-      const tmpPlayer: any = findPlayerBySid(data[0]);
+      //const tmpPlayer: any = findPlayerBySid(data[0]);
 
-      if (tmpPlayer) {
-        updatePlayer(tmpPlayer, data, i);
-      }
+      //if (tmpPlayer) {
+      //  updatePlayer(tmpPlayer, data, i);
+      //}
     }
   }
 }

@@ -8,6 +8,8 @@ const { players } = Players.getInstance();
 
 import { Player } from "./Players/Player";
 
+import { badWordsList } from "./badWords";
+
 /**
  * A class for encoding and decoding data using MessagePack
  */
@@ -84,12 +86,17 @@ class WS extends Msgpack {
     } else if (type === "D") {
       // ADD PLAYER:
       
-      alert(packetData[1]);
+      console.log(packetData);
       if(packetData[1]) {
         // MY PLAYER:
-        
-        players.myPlayer = new Player(packetData[0][0]);
-        console.warn(packetData[0]);
+
+        /* Data format:
+
+        0: {id, sid, name, x, y, something, health, something, scale?, something}
+        1: true/false for yes/no is me
+        */
+
+        players.myPlayer = new Player(packetData[0][1]);
         players.push(players.myPlayer);
       } else {
         var tmpObj = new Player(packetData[0][0]);
@@ -108,6 +115,8 @@ class WS extends Msgpack {
       // GATHER ANIMATION:
     } else if (type === "O") {
       // UPDATE HEALTH:
+    } else if (type === "6") {
+      // RECEIVE CHAT:
     }
   }
 }
@@ -116,7 +125,7 @@ class WS extends Msgpack {
  * Monkey patches the WebSocket prototype to add a custom send method
  */
 WebSocket.prototype.send2 = WebSocket.prototype.send // so it won't call itself each time
-WebSocket.prototype.send = function(packet: any): void {
+WebSocket.prototype.send = function(packet: any, ...param: any): void {
   if (!this.mod) {
     this.mod = new WS();
 
@@ -126,6 +135,8 @@ WebSocket.prototype.send = function(packet: any): void {
       this.mod.handlePackets(msg.data);
     });
   }
+
+  console.log(packet, param);
 
   this.send2(packet);
 };
