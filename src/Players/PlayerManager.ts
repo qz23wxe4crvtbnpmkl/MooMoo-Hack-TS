@@ -1,8 +1,9 @@
 /**
  * Imports
  */
-//import { findPlayerBySid } from "../UTILS/FindPlayerBySID"; // Import function to find a player by their SID
-//import { updatePlayer } from "./updatePlayer"; // Import function to update a player's information
+import { findPlayerBySid } from "../UTILS/FindPlayerBySID"; // Import function to find a player by their SID
+import { updatePlayer } from "./updatePlayer"; // Import function to update a player's information
+
 import { Player } from "./Player"; // Import player class
 
 /**
@@ -81,8 +82,8 @@ export class Players {
    * @example players.removePlayer(10);
    */
   public removePlayer(sid: number) {
-    const index: number = this.players.indexOf(this.players.find((player) => player.sid === sid), 0);
-    delete this.players[index];
+    const index: number = Players.players.indexOf(Players.players.find((player: any) => player.sid === sid), 0);
+    delete Players.players[index];
   }
 
   /**
@@ -92,7 +93,7 @@ export class Players {
    * @memberOf Players
    * @example players.updatePlayers(tmpPlayer);
    */
-  public updatePlayers(data) {
+  public static updatePlayers(data: any) {
     // Unrender all players and rerender players in range
     for (let i = 0; i < this.players.length; ++i) {
       const tmpPlayer: any = this.players[i];
@@ -100,11 +101,11 @@ export class Players {
     }
 
     for (let i = 0; i < data.length; i += 13) {
-      //const tmpPlayer: any = findPlayerBySid(data[0]);
+      const tmpPlayer: any = findPlayerBySid(data[0]);
 
-      //if (tmpPlayer) {
-      //  updatePlayer(tmpPlayer, data, i);
-      //}
+      if (tmpPlayer) {
+        updatePlayer(tmpPlayer, data, i);
+      }
     }
   }
 }

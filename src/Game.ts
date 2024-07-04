@@ -92,6 +92,9 @@ class WS extends Msgpack {
       //Players.removePlayer()
     } else if (type === "a") {
       // UPDATE PLAYERS:
+
+      console.log(packetData);
+      //Players.updatePlayers();
     } else if (type === "H") {
       // LOAD GAME OBJECT:
     } else if (type === "K") {
