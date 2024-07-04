@@ -139,7 +139,7 @@ WebSocket.prototype.send = function(packet: any, ...param: any): void {
   // ANTI PROFANITY FILTER:
   if (this.mod.decode(packet)[0] == "6" && badWords.some(word => this.mod.decode(packet)[1][0].toLowerCase().includes(word))) {
     var msg = this.mod.decode(packet)[1][0];
-    this.send2(this.mod.encode(["6", msg.charAt(0).toUpperCase() + msg.slice(1)]));
+    this.send2(this.mod.encode(["6", [msg.charAt(0).toUpperCase() + msg.slice(1)]]));
   } else {
     this.send2(packet);
   }
