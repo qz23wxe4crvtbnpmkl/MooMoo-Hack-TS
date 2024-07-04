@@ -56,8 +56,8 @@ class WS extends Msgpack {
       throw new Error("[*] WebSocket is not initialized");
     }
 
-    console.log(...data);
-    this.ws.send(this.encode([type, ...data]));
+    console.log(data);
+    this.ws.send(this.encode([type, data]));
   }
 
   /**
@@ -73,6 +73,12 @@ class WS extends Msgpack {
 
     if (type === "a") {
       this.send("6", "wow");
+    } else if (type === "io-init") {
+      this.send("M", {
+        name: "onion",
+        moofoll: 1,
+        skin: "__proto__"
+      })
     }
   }
 }
@@ -129,3 +135,16 @@ alert("MooMoo TS Loaded");
 document.getElementById("gameName").innerHTML = `
 <img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201">
 `;
+
+//dark mode overlay
+var overlay = document.createElement("div");
+overlay.style = `
+position: absolute;
+top: 0;
+left: 0;
+background: rgba(0, 0, 70, 0.2);
+width: 100%;
+height: 100%;
+pointer-events: none;
+`;
+document.body.appendChild(overlay);
