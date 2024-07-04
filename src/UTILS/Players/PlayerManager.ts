@@ -1,7 +1,7 @@
 /**
  * Imports
  */
-import { findPlayerBySid } from "../UTILS/FindPlayerBySID"; // Import function to find a player by their SID
+import { findPlayerBySid } from "../FindPlayerBySID"; // Import function to find a player by their SID
 import { updatePlayer } from "./updatePlayer"; // Import function to update a player's information
 import { Player } from "./Player"; // Import player class
 

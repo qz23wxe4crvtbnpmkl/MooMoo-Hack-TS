@@ -1,7 +1,7 @@
 /**
  * Imports the getDistance function from the UTILS/GetDistance module
  */
-import { getDistance } from "../UTILS/GetDistance";
+import { getDistance } from "./GetDistance";
 
 /**
  * Calculates the terminal velocity of a player

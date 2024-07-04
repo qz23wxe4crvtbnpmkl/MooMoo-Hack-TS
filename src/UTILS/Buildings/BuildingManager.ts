@@ -1,7 +1,7 @@
 /**
  * Imports
  */
-import { Building } from "../Buildings/Building"; // Import Building class
+import { Building } from "./Building"; // Import Building class
 
 /**
  * Building Manager class

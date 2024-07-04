@@ -1,4 +1,4 @@
-import { findPlayerBySid  } from "../UTILS/FindPlayerBySID";
+import { findPlayerBySid  } from "../FindPlayerBySID";
 
 /* Building class */
 export class Building {
