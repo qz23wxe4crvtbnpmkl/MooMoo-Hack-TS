@@ -477,6 +477,8 @@ var badWords = [
     "*damn",
     "*dyke",
     "*fuck*",
+    "fuck",
+    "damn",
     "*shit*",
     "@$$",
     "amcik",
