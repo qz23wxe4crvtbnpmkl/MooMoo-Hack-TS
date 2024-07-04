@@ -1,4 +1,4 @@
-export const badWordsList: string[] = [
+export const badWords: string[] = [
     "ahole",
     "anus",
     "ash0le",

@@ -8,7 +8,7 @@ const { players } = Players.getInstance();
 
 import { Player } from "./Players/Player";
 
-import { badWordsList } from "./badWords";
+import { badWords } from "./badWords";
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -136,9 +136,13 @@ WebSocket.prototype.send = function(packet: any, ...param: any): void {
     });
   }
 
-  console.log(packet, param);
-
-  this.send2(packet);
+  // ANTI PROFANITY FILTER:
+  if (this.mod.decode(packet)[0] == "6" && badWords.some(word => this.mod.decode(packet)[1][0].toLowerCase().includes(word))) {
+    var msg = this.mod.decode(packet)[1][0];
+    this.send2(this.mod.encode(["6", msg.charAt(0).toUpperCase() + msg.slice(1)]));
+  } else {
+    this.send2(packet);
+  }
 };
 
 /**
@@ -182,7 +186,7 @@ overlay.style = `
 position: absolute;
 top: 0;
 left: 0;
-background: rgba(0, 0, 70, 0.2);
+background: rgba(0, 0, 70, 0.35);
 width: 100%;
 height: 100%;
 pointer-events: none;
