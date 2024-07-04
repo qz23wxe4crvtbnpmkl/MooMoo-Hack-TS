@@ -508,8 +508,6 @@ var badWords = [
     "enculer",
     "faen",
     "fag*",
-    "fuck",
-    "damn",
     "fanculo",
     "fanny",
     "feces",
