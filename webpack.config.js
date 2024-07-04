@@ -1,6 +1,6 @@
 module.exports = {
     mode: 'development',
-    entry: './src/UTILS/Game.ts',
+    entry: './src/Game',
     module: {
       rules: [
         {
@@ -15,6 +15,7 @@ module.exports = {
     },
     output: {
       filename: 'bundle.js',
-      path: __dirname + '/dist',
+      path: __dirname + '/client',
     },
+    devtool: 'inline-cheap-module-source-map',
   };

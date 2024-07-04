@@ -12,7 +12,7 @@ import { Player } from "./Player"; // Import player class
  * 
  * @memberOf module:Players
  */
-export class Players {
+export default class Players {
   /**
    * Private static instance of the Players class
    */
@@ -22,6 +22,11 @@ export class Players {
    * Array of players
    */
   public players: any[];
+
+  /**
+   * My player
+   */
+  public myPlayer: any;
 
   /**
    * Gets the singleton instance of the Players class
@@ -45,8 +50,8 @@ export class Players {
    * @memberOf Players
    * @example players.addPlayer(1, { name: "Onion", skin: "__proto__"});
    */
-  public addPlayer(sid: number, ...data) {
-    var tmpObj = new Player(sid);
+  public addPlayer(SID: number, ...data: any[]) {
+    var tmpObj = new Player(SID);
 
     // INIT:
     tmpObj.init(...data);
