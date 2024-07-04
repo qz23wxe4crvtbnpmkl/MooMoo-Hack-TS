@@ -4,11 +4,6 @@
 import { Players } from "../Players/PlayerManager";
 
 /**
- * Gets the players array from the Players instance
- */
-const { players } = Players.getInstance();
-
-/**
  * Finds a player by their SID
  * 
  * @param {number} sid The SID of the player to find
@@ -20,5 +15,5 @@ export function findPlayerBySid(sid: number) {
   /**
    * Uses the find method to search the players array for a player with a matching SID
    */
-  return players.players.find((player) => player.sid === sid);
+  return Players.players.find((player) => player.sid === sid);
 }

@@ -5,6 +5,7 @@ export class Player {
     public isTeam: any;
     private id: string;
     private name: string;
+    private team: string;
     private health: number;
     private lastHealth: number;
     private maxHealth: number;

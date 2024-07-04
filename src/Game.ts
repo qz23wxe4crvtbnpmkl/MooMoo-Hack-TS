@@ -93,8 +93,8 @@ class WS extends Msgpack {
     } else if (type === "a") {
       // UPDATE PLAYERS:
 
-      console.log(packetData);
-      //Players.updatePlayers();
+      console.log(Players.myPlayer);
+      Players.updatePlayers(packetData);
     } else if (type === "H") {
       // LOAD GAME OBJECT:
     } else if (type === "K") {
@@ -175,7 +175,7 @@ overlay.style = `
 position: absolute;
 top: 0;
 left: 0;
-background: rgba(0, 0, 70, 0.35);
+background: rgba(255, 255, 185, 0.15);
 width: 100%;
 height: 100%;
 pointer-events: none;

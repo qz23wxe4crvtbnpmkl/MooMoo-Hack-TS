@@ -1,4 +1,4 @@
-import { findPlayerBySid  } from "../FindPlayerBySID";
+//import { findPlayerBySid  } from "../FindPlayerBySID";
 
 /* Building class */
 export class Building {
@@ -51,7 +51,7 @@ export class Building {
         this.buildHealth = this.maxHealth;
 
         this.isTeamObject = (tmpObj) => {
-            return (tmpObj.sid === this.owner?.sid || this.isTeam(findPlayerBySid(tmpObj)))
+            return false; //(tmpObj.sid === this.owner?.sid || this.isTeam(findPlayerBySid(tmpObj)))
         }
     }
 }

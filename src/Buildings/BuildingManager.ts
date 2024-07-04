@@ -74,7 +74,10 @@ export class ObjectManager {
    * @example ObjectManager.getInstance().removeAllObjects(10);
    */
   public removeAllObjects(sid: number) {
-    this.gameObjects = [];
-    this.relevantGameObjects = {};
-  }
+      this.gameObjects.forEach((tmpObj) => {
+          if(tmpObj?.owner?.sid === sid) {
+            this.removeGameObject(tmpObj.sid);
+          }
+      })
+    }
 }
