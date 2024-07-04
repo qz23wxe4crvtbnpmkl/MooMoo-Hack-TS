@@ -85,24 +85,7 @@ class WS extends Msgpack {
       window.location.reload();
     } else if (type === "D") {
       // ADD PLAYER:
-      
-      console.log(packetData);
-      if(packetData[1]) {
-        // MY PLAYER:
-
-        /* Data format:
-
-        0: {id, sid, name, x, y, something, health, something, scale?, something}
-        1: true/false for yes/no is me
-        */
-
-        players.myPlayer = new Player(packetData[0][1]);
-        players.push(players.myPlayer);
-      } else {
-        var tmpObj = new Player(packetData[0][0]);
-
-        players.players.push(tmpObj);
-      }
+      Players.addPlayer(packetData[0][0], packetData)
     } else if (type === "E") {
       // REMOVE PLAYER:
 
@@ -113,6 +96,9 @@ class WS extends Msgpack {
       // LOAD GAME OBJECT:
     } else if (type === "K") {
       // GATHER ANIMATION:
+      if(packetData[2])
+      var bonk = new Audio("https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/bonk.mp4");
+      bonk.play();
     } else if (type === "O") {
       // UPDATE HEALTH:
     } else if (type === "6") {

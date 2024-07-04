@@ -7,6 +7,7 @@ export class Player {
     private name: string;
     private health: number;
     private lastHealth: number;
+    private maxHealth: number;
     private x: number;
     private y: number;
     private x2: number;
@@ -16,20 +17,25 @@ export class Player {
     private skinIndex: number;
     private lastSkinIndex: number;
     private tailIndex: number;
-    private lastTailIndex: number; 
+    private lastTailIndex: number;
+    private skinColor: any;
+    private scale: number;
     
     constructor(sid: number) {
         this.sid = sid;
-        this.isTeam = (tmpObj) {
+        this.isTeam = (tmpObj: any) => {
             return (tmpObj.sid === this.sid || tmpObj.team && tmpObj.team === this.team);
         }
 
         // INIT:
-        this.init = function(id: string, name: string, x: number, y: number) {
+        this.init = function(id: string, name: string, x: number, y: number, dir: number, health: number, maxHealth: number, scale: any, skinColor: any) {
             this.id = id;
             this.name = name;
+            this.scale = scale;
+            this.dir = dir;
 
-            this.health = 100;
+            this.health = health;
+            this.maxHealth = maxHealth;
             this.lastHealth = this.health;
 
             this.x = 0;

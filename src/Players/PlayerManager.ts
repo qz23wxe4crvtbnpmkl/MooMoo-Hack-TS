@@ -21,7 +21,7 @@ export class Players {
   /**
    * Array of players
    */
-  public players: any[] = [];
+  public static players: any[] = [];
 
   /**
    * My player
@@ -50,13 +50,27 @@ export class Players {
    * @memberOf Players
    * @example players.addPlayer(1, { name: "Onion", skin: "__proto__"});
    */
-  public addPlayer(SID: number, ...data: any[]) {
-    var tmpObj = new Player(SID);
+  public static addPlayer(SID: number, data: any) {
+      /* Data format:
 
-    // INIT:
-    tmpObj.init(...data);
+      0: {id, sid, name, x, y, something, health, something, scale?, something}
+      1: true/false for yes/no is me
+      */
 
-    this.players.push(Player);
+    if(data[1]) {
+      // MY PLAYER:
+
+      Players.myPlayer = new Player(SID);
+      Players.players.push(Players.myPlayer);
+
+      // INIT:
+      Players.myPlayer.init(data[0][0], data[0][2], data[0][3], data[0][4], data[0][5], data[0][6], data[0][7], data[0][8], data[0][9]);
+    } else {
+      var tmpObj = new Player(SID);
+      Players.players.push(tmpObj);
+
+      tmpObj.init(data[0][0], data[0][2], data[0][3], data[0][4], data[0][5], data[0][6], data[0][7], data[0][8], data[0][9]);
+    }
   }
 
   /**
