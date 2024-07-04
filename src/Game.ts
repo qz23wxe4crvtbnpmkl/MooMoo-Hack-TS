@@ -3,6 +3,11 @@
  */
 //const msgpack = require("msgpack");
 
+import { Players } from "./Players/PlayerManager";
+const { players } = Players.getInstance();
+
+import { Player } from "./Players/Player";
+
 /**
  * A class for encoding and decoding data using MessagePack
  */
@@ -67,18 +72,42 @@ class WS extends Msgpack {
    */
   public handlePackets(data: any): void {
     data = new Uint8Array(data);
-    const parsed = this.decode(data);
+    const parsed: any = this.decode(data);
     const type: string = parsed[0];
-    const packetData = parsed[1];
+    const packetData: any[] = parsed[1];
 
-    if (type === "a") {
-      this.send("6", "wow");
-    } else if (type === "io-init") {
-      this.send("M", {
-        name: "onion",
-        moofoll: 1,
-        skin: "__proto__"
-      })
+    if(type === "A") {
+      // SET INIT DATA;
+    } else if (type === "B") {
+      // DISCONNECT:
+      window.location.reload();
+    } else if (type === "D") {
+      // ADD PLAYER:
+      
+      alert(packetData[1]);
+      if(packetData[1]) {
+        // MY PLAYER:
+        
+        players.myPlayer = new Player(packetData[0][0]);
+        console.warn(packetData[0]);
+        players.push(players.myPlayer);
+      } else {
+        var tmpObj = new Player(packetData[0][0]);
+
+        players.players.push(tmpObj);
+      }
+    } else if (type === "E") {
+      // REMOVE PLAYER:
+
+      //Players.removePlayer()
+    } else if (type === "a") {
+      // UPDATE PLAYERS:
+    } else if (type === "H") {
+      // LOAD GAME OBJECT:
+    } else if (type === "K") {
+      // GATHER ANIMATION:
+    } else if (type === "O") {
+      // UPDATE HEALTH:
     }
   }
 }

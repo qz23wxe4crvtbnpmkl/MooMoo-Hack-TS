@@ -1,7 +1,7 @@
 /**
  * Imports the Players class
  */
-import { Players } from "./Players/PlayerManager";
+import Players from "../Players/PlayerManager";
 
 /**
  * Gets the players array from the Players instance
