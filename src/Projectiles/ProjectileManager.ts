@@ -1,3 +1,1 @@
-export class projectileManager {
-    
-}
+export class projectileManager {}

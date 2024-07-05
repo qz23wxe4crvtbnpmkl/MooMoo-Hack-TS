@@ -16,7 +16,7 @@ import { badWords } from "./badWords";
 class Msgpack {
   /**
    * Encodes data using MessagePack
-   * 
+   *
    * @param {any} data The data to encode
    * @returns {Buffer} The encoded data
    */
@@ -26,7 +26,7 @@ class Msgpack {
 
   /**
    * Decodes data using MessagePack
-   * 
+   *
    * @param {Buffer} data The data to decode
    * @returns {any} The decoded data
    */
@@ -54,7 +54,7 @@ class WS extends Msgpack {
 
   /**
    * Sends a packet over the WebSocket connection
-   * 
+   *
    * @param {string} type The type of packet
    * @param {...any[]} data The data to send
    */
@@ -69,7 +69,7 @@ class WS extends Msgpack {
 
   /**
    * Handles incoming packets from the WebSocket connection
-   * 
+   *
    * @param {any} data The incoming packet data
    */
   public handlePackets(data: any): void {
@@ -78,17 +78,16 @@ class WS extends Msgpack {
     const type: string = parsed[0];
     const packetData: any[] = parsed[1];
 
-    if(type === "A") {
+    if (type === "A") {
       // SET INIT DATA;
     } else if (type === "B") {
       // DISCONNECT:
       window.location.reload();
     } else if (type === "D") {
       // ADD PLAYER:
-      Players.addPlayer(packetData[0][0], packetData)
+      Players.addPlayer(packetData[0][0], packetData);
     } else if (type === "E") {
       // REMOVE PLAYER:
-
       //Players.removePlayer()
     } else if (type === "a") {
       // UPDATE PLAYERS:
@@ -99,8 +98,10 @@ class WS extends Msgpack {
       // LOAD GAME OBJECT:
     } else if (type === "K") {
       // GATHER ANIMATION:
-      if(packetData[2])
-      var bonk = new Audio("https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/bonk.mp4");
+      if (packetData[2])
+        var bonk = new Audio(
+          "https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/bonk.mp4",
+        );
       bonk.play();
     } else if (type === "O") {
       // UPDATE HEALTH:
@@ -113,8 +114,8 @@ class WS extends Msgpack {
 /**
  * Monkey patches the WebSocket prototype to add a custom send method
  */
-WebSocket.prototype.send2 = WebSocket.prototype.send // so it won't call itself each time
-WebSocket.prototype.send = function(packet: any, ...param: any): void {
+WebSocket.prototype.send2 = WebSocket.prototype.send; // so it won't call itself each time
+WebSocket.prototype.send = function (packet: any, ...param: any): void {
   if (!this.mod) {
     this.mod = new WS();
 
@@ -126,9 +127,16 @@ WebSocket.prototype.send = function(packet: any, ...param: any): void {
   }
 
   // ANTI PROFANITY FILTER:
-  if (this.mod.decode(packet)[0] == "6" && badWords.some(word => this.mod.decode(packet)[1][0].toLowerCase().includes(word))) {
+  if (
+    this.mod.decode(packet)[0] == "6" &&
+    badWords.some((word) =>
+      this.mod.decode(packet)[1][0].toLowerCase().includes(word),
+    )
+  ) {
     var msg = this.mod.decode(packet)[1][0];
-    this.send2(this.mod.encode(["6", [msg.charAt(0).toUpperCase() + msg.slice(1)]]));
+    this.send2(
+      this.mod.encode(["6", [msg.charAt(0).toUpperCase() + msg.slice(1)]]),
+    );
   } else {
     this.send2(packet);
   }
@@ -151,7 +159,7 @@ export class Game extends WS {
 
   /**
    * Gets the singleton instance of the Game class
-   * 
+   *
    * @returns {Game} The singleton instance
    */
   public static getInstance(): Game {
@@ -167,13 +175,13 @@ var Mod = Game.getInstance();
 alert("MooMoo TS Loaded");
 
 window.onload = function () {
-document.getElementById("gameName").innerHTML = `
+  document.getElementById("gameName").innerHTML = `
 <img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201">
 `;
 
-// GAME OVERLAY:
-var overlay = document.createElement("div");
-overlay.style = `
+  // GAME OVERLAY:
+  var overlay = document.createElement("div");
+  overlay.style = `
 position: absolute;
 top: 0;
 left: 0;
@@ -182,21 +190,21 @@ width: 100%;
 height: 100%;
 pointer-events: none;
 `;
-document.body.appendChild(overlay);
+  document.body.appendChild(overlay);
 
-// VERIFICATION PROMPT:
-class VerificationPrompt {
-  private mainHolder: HTMLElement;
-  private title: HTMLElement;
-  private input: HTMLInputElement;
-  private check: HTMLElement;
-  private blur: HTMLElement;
+  // VERIFICATION PROMPT:
+  class VerificationPrompt {
+    private mainHolder: HTMLElement;
+    private title: HTMLElement;
+    private input: HTMLInputElement;
+    private check: HTMLElement;
+    private blur: HTMLElement;
 
-  constructor() {}
+    constructor() {}
 
-  public prepare(): void {
-    this.blur = document.createElement("div");
-    this.blur.style.cssText = `
+    public prepare(): void {
+      this.blur = document.createElement("div");
+      this.blur.style.cssText = `
       position: absolute;
       top: 50%;
       left: 50%;
@@ -208,10 +216,10 @@ class VerificationPrompt {
       z-index: 8887;
     `;
 
-    document.body.appendChild(this.blur);
+      document.body.appendChild(this.blur);
 
-    this.mainHolder = document.createElement("div");
-    this.mainHolder.style.cssText = `
+      this.mainHolder = document.createElement("div");
+      this.mainHolder.style.cssText = `
       position: absolute;
       top: 50%;
       left: 50%;
@@ -225,11 +233,11 @@ class VerificationPrompt {
       z-index: 8888;
     `;
 
-    document.body.appendChild(this.mainHolder);
+      document.body.appendChild(this.mainHolder);
 
-    this.title = document.createElement("div");
-    this.title.innerHTML = "Authentication.";
-    this.title.style.cssText = `
+      this.title = document.createElement("div");
+      this.title.innerHTML = "Authentication.";
+      this.title.style.cssText = `
       position: absolute;
       top: 35%;
       left: 50%;
@@ -242,12 +250,12 @@ class VerificationPrompt {
       font-weight: bold;
     `;
 
-    this.mainHolder.appendChild(this.title);
+      this.mainHolder.appendChild(this.title);
 
-    this.input = document.createElement("input");
-    this.input.placeholder = "Enter Token Here...";
-    this.input.type = "password";
-    this.input.style.cssText = `
+      this.input = document.createElement("input");
+      this.input.placeholder = "Enter Token Here...";
+      this.input.type = "password";
+      this.input.style.cssText = `
       position: absolute;
       height: 50px;
       background: rgba(135, 135, 135, 0.3);
@@ -260,10 +268,10 @@ class VerificationPrompt {
       color: #fff;
     `;
 
-    this.mainHolder.appendChild(this.input);
+      this.mainHolder.appendChild(this.input);
 
-    this.check = document.createElement("div");
-    this.check.style.cssText = `
+      this.check = document.createElement("div");
+      this.check.style.cssText = `
       position: absolute;
       bottom: 5%;
       right: 3%;
@@ -279,12 +287,12 @@ class VerificationPrompt {
       justify-content: center;
       align-items: center;
     `;
-    this.check.innerHTML = "Verify";
+      this.check.innerHTML = "Verify";
 
-    this.mainHolder.appendChild(this.check);
+      this.mainHolder.appendChild(this.check);
+    }
   }
-}
 
-const verify = new VerificationPrompt();
-verify.prepare();
-}
+  const verify = new VerificationPrompt();
+  verify.prepare();
+};

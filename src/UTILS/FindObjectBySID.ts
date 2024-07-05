@@ -10,7 +10,7 @@ const { gameObjects } = ObjectManager.getInstance();
 
 /**
  * Finds an object by its SID
- * 
+ *
  * @param {number} sid The SID of the object to find
  * @returns {any} The object with the matching SID, or undefined if not found
  * @memberOf module:FindObjectBySID

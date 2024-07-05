@@ -5,7 +5,7 @@ import { Players } from "../Players/PlayerManager";
 
 /**
  * Finds a player by their SID
- * 
+ *
  * @param {number} sid The SID of the player to find
  * @returns {any} The player with the matching SID, or undefined if not found
  * @memberOf module:FindPlayerBySID

@@ -5,7 +5,7 @@ import { atan2 } from "../Math";
 
 /**
  * Calculates the direction from obj1 to obj2
- * 
+ *
  * @param {any} obj1 The source object
  * @param {any} obj2 The target object
  * @returns {number} The direction in radians from obj1 to obj2
