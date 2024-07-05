@@ -91,15 +91,16 @@ class WS extends Msgpack {
     } else if (type === "a") {
       // UPDATE PLAYERS:
 
-      console.log(Players.myPlayer);
       Players.updatePlayers(packetData);
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
-console.warn(data[0]);
-      for(let i = 0; i < data[0].length; i += 8) {
-        ObjectManager.addBuilding(data[0][i], i);
+      console.warn(this.decode(data));
+      for(let i = 0; i < data.length; i += 8) {
+        ObjectManager.addBuilding(data[i], i);
       }
+
+      console.log(ObjectManager.Buildings);
     } else if (type === "K") {
       // GATHER ANIMATION:
       if (packetData[2])
@@ -298,5 +299,5 @@ pointer-events: none;
   }
 
   const verify = new VerificationPrompt();
-  verify.prepare();
+  //verify.prepare();
 };

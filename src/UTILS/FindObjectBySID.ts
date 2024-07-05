@@ -4,11 +4,6 @@
 import { ObjectManager } from "../Buildings/BuildingManager";
 
 /**
- * Gets the gameObjects array from the ObjectManager instance
- */
-const { gameObjects } = ObjectManager.getInstance();
-
-/**
  * Finds an object by its SID
  *
  * @param {number} sid The SID of the object to find
@@ -20,7 +15,7 @@ export function findObjectBySid(sid: number) {
   /**
    * Uses the find method to search the gameObjects array for an object with a matching SID
    */
-  var Object = gameObjects.find((object: any) => object.sid === sid);
+  var Object = ObjectManager.Buildings.find((object: any) => object.sid === sid);
   return Object;
 }
 

@@ -58,7 +58,6 @@ export class ObjectManager {
   public static addBuilding(data: any[], index: number) {
     var tmpObj = new Building(data[0]);
 
-    ObjectManager.Buildings.push(tmpObj);
     tmpObj.init(
       data[index + 1],
       data[index + 2],
@@ -67,6 +66,8 @@ export class ObjectManager {
       data[index + 5],
       Items[data[index + 6]],
     );
+
+    ObjectManager.Buildings.push(tmpObj);
   }
 
   /**
