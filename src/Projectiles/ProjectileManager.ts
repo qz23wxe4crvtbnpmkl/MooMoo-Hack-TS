@@ -1,19 +1,21 @@
 import { getDistance } from "../UTILS/GetDistance";
+import { Projectile } from "./Projectile";
 
-export class Projectile {
-  public projectileCount: number = 0;
+export class projectileManager {
+  public static projectileCount: number = 0;
   public static projectiles: any[] = [];
 
-  public addProjectile() {
+  public static addProjectile() {
+    //var tmpObj = new Projectile();
 
-    this.projectileCount++;
+    projectileManager.projectileCount++;
   }
 
-  public removeProjectile(SID: number) {
-    var item = Projectile.projectiles.indexOf(Projectile.projectiles.find((proj) => proj.sid === SID), 0);
+  public static removeProjectile(SID: number) {
+    var item = projectileManager.projectiles.indexOf(projectileManager.projectiles.find((proj) => proj.sid === SID), 0);
 
-    delete Projectile.projectiles[item];
-    this.projectileCount--;
+    delete projectileManager.projectiles[item];
+    projectileManager.projectileCount--;
   }
 
   public static retrieveDangerousProjectiles(player: any) {
@@ -33,10 +35,10 @@ export class Projectile {
     //the code below is very beta, and is just a placeholder to make it look like i did work today
     //in the future, map out all the projectiles speed and assign it with the projectile speeds/tick
 
-    Projectile.projectiles.map((projectile) => projectile.speed / (1e3 / 9));
+    //Projectile.projectiles.map((projectile) => projectile.distPerTick /* (1e3 / 9)*/);
 
-    Projectile.projectiles.forEach((projectile) => {
-      if(getDistance(projectile.returnNextTickPosition, player, 0, 2) <= player.scale + projectile.scale) {
+    projectileManager.projectiles.forEach((projectile) => {
+      if(getDistance(projectile.returnNextTickPosition(), player, 0, 2) <= player.scale) {
         projectiles.push(projectile);
       }
     });

@@ -9,6 +9,8 @@ import { badWords } from "./badWords";
 
 import { ObjectManager } from "./Buildings/BuildingManager";
 
+import { projectileManager } from "./Projectiles/ProjectileManager";
+
 /**
  * A class for encoding and decoding data using MessagePack
  */
@@ -96,8 +98,10 @@ class WS extends Msgpack {
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
-      for (let i = 0; i < data.length;) {
-        ObjectManager.addBuilding(data[i]);
+      for (let i = 0; i < packetData.length;) {
+        ObjectManager.addBuilding(packetData, i);
+
+        console.log(packetData[i]);
 
         i += 8;
       }
@@ -111,15 +115,20 @@ class WS extends Msgpack {
       bonk.play();
     } else if (type === "O") {
       // UPDATE HEALTH:
+    } else if (type === "Y") {
+      // REMOVE PROJECTILE:
+
+      console.log(packetData[0]);
+      projectileManager.removeProjectile(packetData[0]);
     } else if (type === "6") {
       // RECEIVE CHAT:
 
-      console.log(packetData);
+      console.log(packetData[1]);
       if(packetData[1].includes("ferris")) {
         this.send("6", "ferris is a skid");
       } else if (packetData[1].includes("pashka")) {
         this.send("6", "pashka is a skid");
-      } else if (packetData[1].includes(""))
+      }
     }
   }
 }
