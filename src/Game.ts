@@ -165,11 +165,13 @@ export class Game extends WS {
 var Mod = Game.getInstance();
 
 alert("MooMoo TS Loaded");
+
+window.onload = function () {
 document.getElementById("gameName").innerHTML = `
 <img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201">
 `;
 
-//dark mode overlay
+// GAME OVERLAY:
 var overlay = document.createElement("div");
 overlay.style = `
 position: absolute;
@@ -181,3 +183,108 @@ height: 100%;
 pointer-events: none;
 `;
 document.body.appendChild(overlay);
+
+// VERIFICATION PROMPT:
+class VerificationPrompt {
+  private mainHolder: HTMLElement;
+  private title: HTMLElement;
+  private input: HTMLInputElement;
+  private check: HTMLElement;
+  private blur: HTMLElement;
+
+  constructor() {}
+
+  public prepare(): void {
+    this.blur = document.createElement("div");
+    this.blur.style.cssText = `
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 40, 0.3);
+      backdrop-filter: blur(6px);
+      z-index: 8887;
+    `;
+
+    document.body.appendChild(this.blur);
+
+    this.mainHolder = document.createElement("div");
+    this.mainHolder.style.cssText = `
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 35%;
+      height: 20%;
+      background: rgba(185, 185, 185, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 6px solid lightgrey;
+      z-index: 8888;
+    `;
+
+    document.body.appendChild(this.mainHolder);
+
+    this.title = document.createElement("div");
+    this.title.innerHTML = "Authentication.";
+    this.title.style.cssText = `
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 80px;
+      color: #000;
+      font: 32px Arial;
+      font-weight: bold;
+    `;
+
+    this.mainHolder.appendChild(this.title);
+
+    this.input = document.createElement("input");
+    this.input.placeholder = "Enter Token Here...";
+    this.input.type = "password";
+    this.input.style.cssText = `
+      position: absolute;
+      height: 50px;
+      background: rgba(135, 135, 135, 0.3);
+      width: 70%;
+      bottom: 5%;
+      left: 3%;
+      border-radius: 10px;
+      border: none;
+      padding-left: 8px;
+      color: #fff;
+    `;
+
+    this.mainHolder.appendChild(this.input);
+
+    this.check = document.createElement("div");
+    this.check.style.cssText = `
+      position: absolute;
+      bottom: 5%;
+      right: 3%;
+      width: 90px;
+      height: 50px;
+      background: rgba(47, 117, 193, 0.2);
+      text-align: center;
+      font: 20px Arial;
+      font-weight: bold;
+      vertical-align: middle;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `;
+    this.check.innerHTML = "Verify";
+
+    this.mainHolder.appendChild(this.check);
+  }
+}
+
+const verify = new VerificationPrompt();
+verify.prepare();
+}

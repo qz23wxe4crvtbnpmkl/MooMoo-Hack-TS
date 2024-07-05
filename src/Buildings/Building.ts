@@ -14,6 +14,7 @@ export class Building {
     private buildHealth: number;
     private owner: string;
     private data: any;
+    private active: boolean;
     private isAlive: boolean;
     private isFake: boolean;
     private wiggle: any;
@@ -28,7 +29,6 @@ export class Building {
     init(sid: number, x: number, y: number, dir: number, scale: number, type: string, owner: string, data: any, isFake: boolean) {
         data = data || {}; //safeholder incase its fucked
         
-        this.isAlive = true;
         this.sid = sid;
         this.id = data.id;
         this.x = x;
@@ -40,11 +40,13 @@ export class Building {
         this.owner = owner;
         this.isFake = isFake;
         this.isAlive = true;
+        this.active = true;
 
         this.wiggle = {
             x: 0,
             y: 0
         };
+        
         this.isItem = (data.id !== null);
         this.objectType = data.trap || data.dmg || data.teleport;
         this.maxHealth = data.health;

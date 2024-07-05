@@ -19,12 +19,12 @@ export class ObjectManager {
   /**
    * Array of game objects
    */
-  public gameObjects: any[] = [];
+  public Buildings: any[] = [];
 
   /**
    * Object of relevant game objects
    */
-  public relevantGameObjects: object = {};
+  public relevantBuildings: any[] = [];
 
   /**
    * Private constructor to prevent instantiation
@@ -54,8 +54,10 @@ export class ObjectManager {
    * @memberOf ObjectManager
    * @example ObjectManager.getInstance().addGameObject(new Building(1234'));
    */
-  public addGameObject(gameObject: any) {
-    this.gameObjects.push(gameObject);
+  public addBuilding(data) {
+    var tmpObj = new Building(2);
+
+    this.Buildings.push(tmpObj);
   }
 
   /**
@@ -65,7 +67,7 @@ export class ObjectManager {
    * @memberOf ObjectManager
    * @example ObjectManager.getInstance().removeGameObject(123);
    */
-  public removeGameObject(sid: number) {}
+  public removeBuilding(sid: number) {}
 
   /**
    * Clears all game objects from the collection
@@ -73,10 +75,10 @@ export class ObjectManager {
    * @memberOf ObjectManager
    * @example ObjectManager.getInstance().removeAllObjects(10);
    */
-  public removeAllObjects(sid: number) {
-      this.gameObjects.forEach((tmpObj) => {
+  public removeAllBuildings(sid: number) {
+      this.Buildings.forEach((tmpObj) => {
           if(tmpObj?.owner?.sid === sid) {
-            this.removeGameObject(tmpObj.sid);
+            this.removeBuilding(tmpObj.sid);
           }
       })
     }
