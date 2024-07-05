@@ -78,6 +78,8 @@ class WS extends Msgpack {
     const type: string = parsed[0];
     const packetData: any[] = parsed[1];
 
+    //console.log(type);
+
     if (type === "A") {
       // SET INIT DATA;
     } else if (type === "B") {
@@ -101,8 +103,6 @@ class WS extends Msgpack {
       for (let i = 0; i < packetData.length;) {
         ObjectManager.addBuilding(packetData, i);
 
-        console.log(packetData[i]);
-
         i += 8;
       }
     } else if (type === "K") {
@@ -115,10 +115,13 @@ class WS extends Msgpack {
       bonk.play();
     } else if (type === "O") {
       // UPDATE HEALTH:
+    } else if (type === "X") {
+      // ADD PROJECTILE:
+      console.log(packetData);
     } else if (type === "Y") {
       // REMOVE PROJECTILE:
 
-      console.log(packetData[0]);
+      console.warn(packetData);
       projectileManager.removeProjectile(packetData[0]);
     } else if (type === "6") {
       // RECEIVE CHAT:
@@ -317,4 +320,6 @@ pointer-events: none;
 
   const verify = new VerificationPrompt();
   //verify.prepare();
+
+  document.getElementById("ageBarBody").style.transition = "0.3s all";
 };
