@@ -19,4 +19,6 @@ export function updatePlayer(player: any, data: any[], index: number) {
   player.lastTailIndex = player.tailIndex;
   player.tailIndex = data[index + 10];
   player.visible = true;
+
+  console.log(player.weaponIndex);
 }

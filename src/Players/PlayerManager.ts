@@ -101,11 +101,12 @@ export class Players {
    * @memberOf Players
    * @example players.removePlayer(10);
    */
-  public removePlayer(sid: number) {
+  public static removePlayer(sid: number) {
     const index: number = Players.players.indexOf(
       Players.players.find((player: any) => player.sid === sid),
       0,
     );
+    
     delete Players.players[index];
   }
 

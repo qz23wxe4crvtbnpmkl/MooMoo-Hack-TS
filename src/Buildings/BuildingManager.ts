@@ -55,13 +55,13 @@ export class ObjectManager {
    * @memberOf ObjectManager
    * @example ObjectManager.getInstance().addBuilding([1234, ...]);
    */
-  public static addBuilding(data: any[], i: number) {
-    var tmpObj = new Building(data[i], data[i + 1], data[i + 2], data[i + 3], data[i + 4],
-      data[i + 5], Items[data[i + 6]], (data[i + 7] >= 0 ? {
-sid: data[i + 7]
+  public static addBuilding(data: any[]) {
+    var tmpObj = new Building(data[0], data[1], data[2], data[3], data[4],
+      data[5], Items[data[6]], (data[7] >= 0 ? {
+sid: data[7]
 } : null), false);
-
-    ObjectManager.Buildings.push(tmpObj);
+console.log(tmpObj);
+ObjectManager.Buildings.push(tmpObj);
   }
 
   /**

@@ -62,7 +62,6 @@ class WS extends Msgpack {
       throw new Error("[*] WebSocket is not initialized");
     }
 
-    console.log(data);
     this.ws.send(this.encode([type, data]));
   }
 
@@ -84,10 +83,12 @@ class WS extends Msgpack {
       window.location.reload();
     } else if (type === "D") {
       // ADD PLAYER:
+
       Players.addPlayer(packetData[0][0], packetData);
     } else if (type === "E") {
       // REMOVE PLAYER:
-      //Players.removePlayer()
+
+      Players.removePlayer(packetData[0]);
     } else if (type === "a") {
       // UPDATE PLAYERS:
 
@@ -95,15 +96,15 @@ class WS extends Msgpack {
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
-      console.warn(this.decode(data));
-      for (let i = 0; i < data.length; i += 8) {
-        ObjectManager.addBuilding(data[i], i);
-      }
+      for (let i = 0; i < data.length;) {
+        ObjectManager.addBuilding(data[i]);
 
-      console.log(ObjectManager.Buildings);
+        i += 8;
+      }
     } else if (type === "K") {
       // GATHER ANIMATION:
-      if (packetData[2])
+
+      if (packetData[0][2])
         var bonk = new Audio(
           "https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/bonk.mp4",
         );
@@ -112,6 +113,13 @@ class WS extends Msgpack {
       // UPDATE HEALTH:
     } else if (type === "6") {
       // RECEIVE CHAT:
+
+      console.log(packetData);
+      if(packetData[1].includes("ferris")) {
+        this.send("6", "ferris is a skid");
+      } else if (packetData[1].includes("pashka")) {
+        this.send("6", "pashka is a skid");
+      } else if (packetData[1].includes(""))
     }
   }
 }

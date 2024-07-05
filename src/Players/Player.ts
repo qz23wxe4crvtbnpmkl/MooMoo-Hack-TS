@@ -21,6 +21,8 @@ export class Player {
   private lastTailIndex: number;
   private skinColor: any;
   private scale: number;
+  private weapons: any[];
+  private weaponIndex: number;
 
   constructor(sid: number) {
     this.sid = sid;
@@ -63,6 +65,9 @@ export class Player {
 
       this.tailIndex = 0;
       this.lastTailIndex = this.tailIndex;
+
+      this.weaponIndex = 0;
+      this.weapons = [0, 0];
     };
   }
 }
