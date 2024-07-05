@@ -4,11 +4,10 @@
 //const msgpack = require("msgpack");
 
 import { Players } from "./Players/PlayerManager";
-const { players } = Players.getInstance();
-
-import { Player } from "./Players/Player";
 
 import { badWords } from "./badWords";
+
+import { ObjectManager } from "./Buildings/BuildingManager";
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -96,6 +95,11 @@ class WS extends Msgpack {
       Players.updatePlayers(packetData);
     } else if (type === "H") {
       // LOAD GAME OBJECT:
+
+console.warn(data[0]);
+      for(let i = 0; i < data[0].length; i += 8) {
+        ObjectManager.addBuilding(data[0][i], i);
+      }
     } else if (type === "K") {
       // GATHER ANIMATION:
       if (packetData[2])
