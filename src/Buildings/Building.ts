@@ -21,12 +21,10 @@ export class Building {
     private isItem: boolean;
     private objectType: any;
     public isTeamObject: any;
-    public init: any;
 
-    constructor(sid: number) {
+    constructor(sid: number, x: number, y: number, dir: number, scale: number, type: any, data: any, owner: any, isFake: boolean) {
         this.sid = sid;
 
-    this.init = function(x: number, y: number, dir: number, scale: number, type: string, owner: string, data: any, isFake: boolean) {
         data = data || {}; //safeholder incase its fucked
         
         this.id = data.id;

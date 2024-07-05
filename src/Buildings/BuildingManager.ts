@@ -55,17 +55,11 @@ export class ObjectManager {
    * @memberOf ObjectManager
    * @example ObjectManager.getInstance().addBuilding([1234, ...]);
    */
-  public static addBuilding(data: any[], index: number) {
-    var tmpObj = new Building(data[0]);
-
-    tmpObj.init(
-      data[index + 1],
-      data[index + 2],
-      data[index + 3],
-      data[index + 4],
-      data[index + 5],
-      Items[data[index + 6]],
-    );
+  public static addBuilding(data: any[], i: number) {
+    var tmpObj = new Building(data[i], data[i + 1], data[i + 2], data[i + 3], data[i + 4],
+      data[i + 5], Items[data[i + 6]], (data[i + 7] >= 0 ? {
+sid: data[i + 7]
+} : null), false);
 
     ObjectManager.Buildings.push(tmpObj);
   }
@@ -86,7 +80,7 @@ export class ObjectManager {
    * @example ObjectManager.getInstance().removeAllObjects(10);
    */
   public removeAllBuildings(sid: number) {
-    this.Buildings.forEach((tmpObj) => {
+    ObjectManager.Buildings.forEach((tmpObj) => {
       if (tmpObj?.owner?.sid === sid) {
         this.removeBuilding(tmpObj.sid);
       }

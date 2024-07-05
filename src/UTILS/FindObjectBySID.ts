@@ -15,7 +15,9 @@ export function findObjectBySid(sid: number) {
   /**
    * Uses the find method to search the gameObjects array for an object with a matching SID
    */
-  var Object = ObjectManager.Buildings.find((object: any) => object.sid === sid);
+  var Object = ObjectManager.Buildings.find(
+    (object: any) => object.sid === sid,
+  );
   return Object;
 }
 

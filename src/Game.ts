@@ -96,7 +96,7 @@ class WS extends Msgpack {
       // LOAD GAME OBJECT:
 
       console.warn(this.decode(data));
-      for(let i = 0; i < data.length; i += 8) {
+      for (let i = 0; i < data.length; i += 8) {
         ObjectManager.addBuilding(data[i], i);
       }
 
