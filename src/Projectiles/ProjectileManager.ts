@@ -12,7 +12,10 @@ export class projectileManager {
   }
 
   public static removeProjectile(SID: number) {
-    var item = projectileManager.projectiles.indexOf(projectileManager.projectiles.find((proj) => proj.sid === SID), 0);
+    var item = projectileManager.projectiles.indexOf(
+      projectileManager.projectiles.find((proj) => proj.sid === SID),
+      0,
+    );
 
     delete projectileManager.projectiles[item];
     projectileManager.projectileCount--;
@@ -38,13 +41,16 @@ export class projectileManager {
     //Projectile.projectiles.map((projectile) => projectile.distPerTick /* (1e3 / 9)*/);
 
     projectileManager.projectiles.forEach((projectile) => {
-      if(getDistance(projectile.returnNextTickPosition(), player, 0, 2) <= player.scale) {
+      if (
+        getDistance(projectile.returnNextTickPosition(), player, 0, 2) <=
+        player.scale
+      ) {
         projectiles.push(projectile);
       }
     });
 
     return projectiles.sort((x: number, y: number) => {
-      return getDistance(player, {x: x, y: y}, 2, 0);
-    })
+      return getDistance(player, { x: x, y: y }, 2, 0);
+    });
   }
 }

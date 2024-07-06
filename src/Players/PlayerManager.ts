@@ -106,7 +106,7 @@ export class Players {
       Players.players.find((player: any) => player.sid === sid),
       0,
     );
-    
+
     delete Players.players[index];
   }
 

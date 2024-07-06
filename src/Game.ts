@@ -100,7 +100,7 @@ class WS extends Msgpack {
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
-      for (let i = 0; i < packetData.length;) {
+      for (let i = 0; i < packetData.length; ) {
         ObjectManager.addBuilding(packetData, i);
 
         i += 8;
@@ -127,7 +127,7 @@ class WS extends Msgpack {
       // RECEIVE CHAT:
 
       console.log(packetData[1]);
-      if(packetData[1].includes("ferris")) {
+      if (packetData[1].includes("ferris")) {
         this.send("6", "ferris is a skid");
       } else if (packetData[1].includes("pashka")) {
         this.send("6", "pashka is a skid");
@@ -201,7 +201,7 @@ alert("MooMoo TS Loaded");
 
 window.onload = function () {
   document.getElementById("gameName").innerHTML = `
-<img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201">
+<img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201" style="width: 400px; height: 250px">
 `;
 
   // GAME OVERLAY:
