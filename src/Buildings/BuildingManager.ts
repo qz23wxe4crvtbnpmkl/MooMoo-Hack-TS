@@ -56,6 +56,7 @@ export class ObjectManager {
    * @example ObjectManager.getInstance().addBuilding([1234, ...]);
    */
   public static addBuilding(data: any[], index: number) {
+    data = data[0];
     var tmpObj = new Building(
       data[0 + index],
       data[1 + index],
@@ -71,7 +72,7 @@ export class ObjectManager {
         : null,
       false,
     );
-    console.log(data[index], data[5 + index]);
+    console.log(tmpObj);
     ObjectManager.Buildings.push(tmpObj);
   }
 

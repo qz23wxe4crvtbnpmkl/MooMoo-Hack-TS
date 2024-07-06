@@ -5,9 +5,12 @@ export class projectileManager {
   public static projectileCount: number = 0;
   public static projectiles: any[] = [];
 
-  public static addProjectile() {
-    //var tmpObj = new Projectile();
+  public static addProjectile(x: number, y: number, dir: number, range: number, speed: number, index: number, layer: number, sid: number) {
+    var projectile = new Projectile(x, y, dir, range, speed, index, null, null, layer);
+    projectile.sid = sid;
 
+    console.warn(projectile);
+    projectileManager.projectiles.push(projectile);
     projectileManager.projectileCount++;
   }
 
@@ -16,6 +19,8 @@ export class projectileManager {
       projectileManager.projectiles.find((proj) => proj.sid === SID),
       0,
     );
+
+    console.warn(projectileManager.projectiles[item], SID);
 
     delete projectileManager.projectiles[item];
     projectileManager.projectileCount--;
@@ -42,7 +47,7 @@ export class projectileManager {
 
     projectileManager.projectiles.forEach((projectile) => {
       if (
-        getDistance(projectile.returnNextTickPosition(), player, 0, 2) <=
+        getDistance(projectile.returnNextTickPosition(projectile.x, projectile.y), player, 0, 2) <=
         player.scale
       ) {
         projectiles.push(projectile);

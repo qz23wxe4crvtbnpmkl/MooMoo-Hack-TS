@@ -1,4 +1,4 @@
-//import { findPlayerBySid } from "../FindPlayerBySID";
+import { findPlayerBySid } from "../UTILS/FindPlayerBySID";
 
 /* Building class */
 export class Building {
@@ -55,13 +55,12 @@ export class Building {
     };
 
     this.isItem = data.id !== null;
-    this.objectType = data.trap || data.dmg || data.teleport;
+    this.objectType = data.trap ? "trap" : data.dmg ? "dmg" : data.teleport ? "teleporter" : null;
     this.maxHealth = data.health;
     this.buildHealth = this.maxHealth;
 
     this.isTeamObject = (tmpObj: any) => {
-      return false;
-      //return tmpObj.sid === this.owner?.sid || this.isTeam(findPlayerBySid(tmpObj));
+      return tmpObj.sid === this.owner?.sid || tmpObj.isTeam(findPlayerBySid(tmpObj));
     };
   }
 }

@@ -100,7 +100,7 @@ class WS extends Msgpack {
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
-      for (let i = 0; i < packetData.length; ) {
+      for (let i = 0; i < packetData.length;) {
         ObjectManager.addBuilding(packetData, i);
 
         i += 8;
@@ -117,7 +117,9 @@ class WS extends Msgpack {
       // UPDATE HEALTH:
     } else if (type === "X") {
       // ADD PROJECTILE:
+
       console.log(packetData);
+      projectileManager.addProjectile(packetData[0], packetData[1], packetData[2], packetData[3], packetData[4], packetData[5], packetData[6], packetData[7]);
     } else if (type === "Y") {
       // REMOVE PROJECTILE:
 
@@ -127,7 +129,7 @@ class WS extends Msgpack {
       // RECEIVE CHAT:
 
       console.log(packetData[1]);
-      if (packetData[1].includes("ferris")) {
+      if(packetData[1].includes("ferris")) {
         this.send("6", "ferris is a skid");
       } else if (packetData[1].includes("pashka")) {
         this.send("6", "pashka is a skid");
@@ -151,20 +153,25 @@ WebSocket.prototype.send = function (packet: any, ...param: any): void {
     });
   }
 
-  // ANTI PROFANITY FILTER:
-  if (
-    this.mod.decode(packet)[0] == "6" &&
-    badWords.some((word) =>
-      this.mod.decode(packet)[1][0].toLowerCase().includes(word),
-    )
-  ) {
-    var msg = this.mod.decode(packet)[1][0];
-    this.send2(
-      this.mod.encode(["6", [msg.charAt(0).toUpperCase() + msg.slice(1)]]),
-    );
-  } else {
-    this.send2(packet);
-  }
+// ANTI PROFANITY FILTER:
+const decodedPacket = this.mod.decode(packet);
+if (decodedPacket[0] === "6" && badWords.some((word) => decodedPacket[1].toLowerCase().includes(word.toLowerCase()))) {
+  const msg = decodedPacket[1];
+  const words = msg.split(' ');
+  const newWords = words.map((word) => {
+    let modifiedWord = word;
+    badWords.forEach((badWord) => {
+      if (word.toLowerCase().includes(badWord.toLowerCase())) {
+        modifiedWord = modifiedWord.replace(new RegExp(badWord, 'gi'), badWord.charAt(0).toUpperCase() + badWord.slice(1));
+      }
+    });
+    return modifiedWord;
+  });
+  const newMsg = newWords.join(' ');
+  this.send2(this.mod.encode(["6", [newMsg]]));
+} else {
+  this.send2(packet);
+}
 };
 
 /**
@@ -322,4 +329,5 @@ pointer-events: none;
   //verify.prepare();
 
   document.getElementById("ageBarBody").style.transition = "0.3s all";
+  document.getElementById("actionBar").style.position = "relative";
 };
