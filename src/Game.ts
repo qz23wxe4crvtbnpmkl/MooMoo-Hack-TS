@@ -10,6 +10,7 @@ import { badWords } from "./badWords";
 import { ObjectManager } from "./Buildings/BuildingManager";
 
 import { projectileManager } from "./Projectiles/ProjectileManager";
+import { findPlayerBySid } from "./UTILS/FindPlayerBySID";
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -84,6 +85,7 @@ class WS extends Msgpack {
       // SET INIT DATA;
     } else if (type === "B") {
       // DISCONNECT:
+
       window.location.reload();
     } else if (type === "D") {
       // ADD PLAYER:
@@ -118,12 +120,10 @@ class WS extends Msgpack {
     } else if (type === "X") {
       // ADD PROJECTILE:
 
-      console.log(packetData);
       projectileManager.addProjectile(packetData[0], packetData[1], packetData[2], packetData[3], packetData[4], packetData[5], packetData[6], packetData[7]);
     } else if (type === "Y") {
       // REMOVE PROJECTILE:
 
-      console.warn(packetData);
       projectileManager.removeProjectile(packetData[0]);
     } else if (type === "6") {
       // RECEIVE CHAT:

@@ -26,6 +26,7 @@ export class projectileManager {
     projectileManager.projectileCount--;
   }
 
+  //must be called every tick
   public static retrieveDangerousProjectiles(player: any) {
     var projectiles: any[] = [];
 
