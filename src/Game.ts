@@ -90,7 +90,8 @@ class WS extends Msgpack {
     } else if (type === "D") {
       // ADD PLAYER:
 
-      Players.addPlayer(packetData[0][0], packetData);
+      console.warn(packetData[0][1])
+      Players.addPlayer(packetData[0][1], packetData);
     } else if (type === "E") {
       // REMOVE PLAYER:
 

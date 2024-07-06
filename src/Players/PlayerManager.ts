@@ -120,17 +120,14 @@ export class Players {
   public static updatePlayers(data: any) {
     // Unrender all players and rerender players in range
 
-    console.log(data);
 
     for (let i = 0; i < this.players.length; ++i) {
       const tmpPlayer: any = this.players[i];
       tmpPlayer.visible = false;
-      console.log(tmpPlayer);
     }
 
     for (let i = 0; i < data.length; i += 13) {
       const tmpPlayer: any = findPlayerBySid(data[0]);
-      console.log(tmpPlayer);
 
       if (tmpPlayer) {
         updatePlayer(tmpPlayer, data, i);

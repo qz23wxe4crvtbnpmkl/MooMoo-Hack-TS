@@ -16,6 +16,5 @@ export function findPlayerBySid(sid: number): any {
    * Uses the find method to search the players array for a player with a matching SID
    */
 
-  console.log(Players, Players.players[0]);
-  return Players.players[0].find((player: any) => player.sid === sid);
+  return Players.players.find((player: any) => player.sid === sid);
 }
