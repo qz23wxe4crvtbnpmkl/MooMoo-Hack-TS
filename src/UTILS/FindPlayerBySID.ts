@@ -11,9 +11,11 @@ import { Players } from "../Players/PlayerManager";
  * @memberOf module:FindPlayerBySID
  * @example findPlayerBySid(123);
  */
-export function findPlayerBySid(sid: number) {
+export function findPlayerBySid(sid: number): any {
   /**
    * Uses the find method to search the players array for a player with a matching SID
    */
+
+  console.log(Players, Players.players);
   return Players.players.find((player) => player.sid === sid);
 }
