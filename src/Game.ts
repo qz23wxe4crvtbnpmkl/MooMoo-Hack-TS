@@ -12,6 +12,8 @@ import { ObjectManager } from "./Buildings/BuildingManager";
 import { projectileManager } from "./Projectiles/ProjectileManager";
 import { findPlayerBySid } from "./UTILS/FindPlayerBySID";
 
+import { Notification } from "./Notification";
+
 /**
  * A class for encoding and decoding data using MessagePack
  */
@@ -82,7 +84,7 @@ class WS extends Msgpack {
     //console.log(type);
 
     if (type === "A") {
-      // SET INIT DATA;
+      // SET INIT DATA:
     } else if (type === "B") {
       // DISCONNECT:
 
@@ -90,12 +92,15 @@ class WS extends Msgpack {
     } else if (type === "D") {
       // ADD PLAYER:
 
-      console.warn(packetData[0][1])
       Players.addPlayer(packetData[0][1], packetData);
     } else if (type === "E") {
       // REMOVE PLAYER:
 
       Players.removePlayer(packetData[0]);
+    } else if (type === "P") {
+      // MY PLAYER DEATH:
+
+
     } else if (type === "a") {
       // UPDATE PLAYERS:
 
@@ -111,11 +116,13 @@ class WS extends Msgpack {
     } else if (type === "K") {
       // GATHER ANIMATION:
 
-      if (packetData[0][2])
-        var bonk = new Audio(
-          "https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/bonk.mp4",
-        );
-      bonk.play();
+      console.log(packetData);
+    } else if (type === "N") {
+      // UPDATE PLAYER VALUES (RESOURCES):
+      
+      if(packetData[0] === "points") {
+        //document.querySelector("#scoreDisplay").innerHTML = Smoothie(Math.round(Players.myPlayer.points), 1e6);
+      }
     } else if (type === "O") {
       // UPDATE HEALTH:
     } else if (type === "X") {
@@ -205,11 +212,9 @@ export class Game extends WS {
 
 var Mod = Game.getInstance();
 
-alert("MooMoo TS Loaded");
-
 window.onload = function () {
   document.getElementById("gameName").innerHTML = `
-<img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201" style="width: 400px; height: 250px">
+<img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201" style="width: 500px; height: 250px">
 `;
 
   // GAME OVERLAY:
@@ -218,7 +223,7 @@ window.onload = function () {
 position: absolute;
 top: 0;
 left: 0;
-background: rgba(255, 255, 185, 0.15);
+background: rgba(0, 0, 70, 0.2);
 width: 100%;
 height: 100%;
 pointer-events: none;
@@ -330,5 +335,23 @@ pointer-events: none;
   //verify.prepare();
 
   document.getElementById("ageBarBody").style.transition = "0.3s all";
-  document.getElementById("actionBar").style.position = "relative";
+  document.getElementById("bottomContainer").style.position = "relative";
+  document.getElementById("bottomContainer").style = `
+  top: 20px;
+  `;
+
+  Array.from(document.getElementsByClassName("actionBarItem")).forEach((element: HTMLElement) => {
+    element.style.cssText += `
+      border-radius: 12px;
+      border: 6px solid rgba(0, 0, 0, 0.2);
+    `;
+  });
+
+  // REMOVE OLD UI ELEMENTS:
+  document.getElementById("ageText").remove();
+  document.getElementById("ageBarContainer").remove();
+  document.getElementById("diedText").remove();
+
+  new Notification("MooMoo TS Loaded!", 2500, "rgba(45, 121, 199, 0.2)");
+  new Notification("Welcome Onion!", 2500, "rgba(0, 0, 40, 0.2)");
 };
