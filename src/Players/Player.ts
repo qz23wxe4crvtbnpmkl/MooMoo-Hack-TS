@@ -1,28 +1,30 @@
 /* Player class */
 export class Player {
-  private sid: number;
+  public sid: number;
   public init: any;
   public isTeam: any;
-  private id: string;
-  private name: string;
-  private team: string;
-  private health: number;
-  private lastHealth: number;
-  private maxHealth: number;
-  private x: number;
-  private y: number;
-  private x2: number;
-  private y2: number;
-  private x3: number;
-  private y3: number;
-  private skinIndex: number;
-  private lastSkinIndex: number;
-  private tailIndex: number;
-  private lastTailIndex: number;
-  private skinColor: any;
-  private scale: number;
-  private weapons: any[];
-  private weaponIndex: number;
+  public id: string;
+  public name: string;
+  public team: string;
+  public health: number;
+  public lastHealth: number;
+  public maxHealth: number;
+  public oldX: number;
+  public oldY: number;
+  public x: number;
+  public y: number;
+  public x2: number;
+  public y2: number;
+  public x3: number;
+  public y3: number;
+  public skinIndex: number;
+  public lastSkinIndex: number;
+  public tailIndex: number;
+  public lastTailIndex: number;
+  public skinColor: any;
+  public scale: number;
+  public weapons: any[];
+  public weaponIndex: number;
 
   constructor(sid: number) {
     this.sid = sid;
@@ -53,6 +55,8 @@ export class Player {
       this.maxHealth = maxHealth;
       this.lastHealth = this.health;
 
+      this.oldX = 0;
+      this.oldY = 0;
       this.x = 0;
       this.y = 0;
       this.x2 = x;

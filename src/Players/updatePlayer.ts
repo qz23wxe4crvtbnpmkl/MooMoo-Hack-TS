@@ -1,10 +1,11 @@
+import { Game } from "../Game";
+var game = new Game;
+
 export function updatePlayer(player: any, data: any[], index: number) {
   player.t1 = player.t2 === void 0 ? Date.now() : player.t2;
   player.t2 = Date.now();
-  player.lasPos = {
-    x: player.x2,
-    y: player.y2,
-  };
+  player.oldX = game.playerXY.x;
+  player.oldY = game.playerXY.y;
   player.x2 = data[index + 1];
   player.y2 = data[index + 2];
   player.d1 = player.d2 === void 0 ? data[index + 3] : player.d2;

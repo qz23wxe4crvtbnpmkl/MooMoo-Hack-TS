@@ -13,6 +13,8 @@ import { projectileManager } from "./Projectiles/ProjectileManager";
 import { findPlayerBySid } from "./UTILS/FindPlayerBySID";
 
 import { Notification } from "./Notification";
+import { getDistance } from "./UTILS/GetDistance";
+import { getDirection } from "./UTILS/GetDirection";
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -163,7 +165,7 @@ WebSocket.prototype.send = function (packet: any, ...param: any): void {
 
 // ANTI PROFANITY FILTER:
 const decodedPacket = this.mod.decode(packet);
-if (decodedPacket[0] === "6" && badWords.some((word) => decodedPacket[1].toLowerCase().includes(word.toLowerCase()))) {
+if (decodedPacket[0] === "6" && badWords.some((word) => decodedPacket[1].toString().toLowerCase().includes(word.toLowerCase()))) {
   const msg = decodedPacket[1];
   const words = msg.split(' ');
   const newWords = words.map((word) => {
@@ -191,6 +193,22 @@ export class Game extends WS {
   public teammate: any;
   public enemies: any[] = [];
   public teammates: any[] = [];
+  
+  public canvas: any = false;
+  public ctx: any = false;
+
+  public camXY: any = {
+    x: 0,
+    y: 0
+  };
+  public playerXY: any = {
+    x: 0,
+    y: 0
+  };
+  public delta: number = 0;
+
+  public xOffset: number = 0;
+  public yOffset: number = 0;
 
   /**
    * The singleton instance of the Game class
@@ -207,6 +225,43 @@ export class Game extends WS {
       Game.instance = new Game();
     }
     return Game.instance;
+  }
+
+  public updateGame() {
+    if(this.canvas) {
+      if(!this.ctx) {
+        this.ctx = this.canvas.getContext("2d");
+      } else {
+        var oldCamXY = this.camXY;
+
+        let camDistance = getDistance(this.camXY, oldCamXY, 0, 0);
+        let camDirection = getDirection(this.camXY, oldCamXY);
+        let camSpeed = Math.min(camDistance * 0.01 * this.delta, camDistance);
+
+        if (camDistance > 0.05) {
+          this.camXY.x += camSpeed * Math.cos(camDirection);
+          this.camXY.y += camSpeed * Math.sin(camDirection);
+      } else {
+          this.camXY.x = this.playerXY.x;
+          this.camXY.y = this.playerXY.y;
+      }
+
+        let rate = 170;
+        Players.myPlayer.delta += this.delta;
+        let tmpRate = Math.min(1.7, Players.myPlayer.delta / rate);
+        let tmpDiff = (Players.myPlayer.x - Players.myPlayer.oldX);
+        this.playerXY.x = Players.myPlayer.oldX + (tmpDiff * tmpRate);
+        tmpDiff = (Players.myPlayer.y - Players.myPlayer.oldY);
+        this.playerXY.y = Players.myPlayer.oldY + (tmpDiff * tmpRate);
+        this.xOffset = this.camXY.x - (1920 / 2);
+        this.yOffset = this.camXY.y - (1080 / 2);
+
+        this.ctx.beginPath();
+        this.ctx.fillStyle = "#ff0000";
+        this.ctx.arc(0, 0, 50, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+    }
   }
 }
 
