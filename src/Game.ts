@@ -107,11 +107,7 @@ class WS extends Msgpack {
     } else if (type === "a") {
       // UPDATE PLAYERS:
 
-      console.log(packetData);
-      Players.updatePlayers(packetData);
-
-      // temp just to make sure shit works
-      Players.myPlayer.delta = 0;
+      Players.updatePlayers(packetData[0]);
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
@@ -251,8 +247,6 @@ export class Game extends WS {
             Game.camXY.x = Game.playerXY.x2;
             Game.camXY.y = Game.playerXY.y2;
           }
-
-          console.log(Game.camXY, Game.playerXY, Game.delta);
   
           let rate = 170;
           Players.myPlayer.delta += Game.delta;
@@ -263,8 +257,6 @@ export class Game extends WS {
           Game.playerXY.y = Players.myPlayer.oldY + (tmpDiff * tmpRate);
           Game.xOffset = Game.camXY.x - (1920 / 2);
           Game.yOffset = Game.camXY.y - (1080 / 2);
-
-          console.warn(Players.myPlayer.x2, Players.myPlayer.y2);
   
           this.ctx.beginPath();
           this.ctx.fillStyle = "#ff0000";
