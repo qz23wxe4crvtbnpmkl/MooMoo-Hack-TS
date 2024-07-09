@@ -55,8 +55,8 @@ export class Player {
       this.maxHealth = maxHealth;
       this.lastHealth = this.health;
 
-      this.oldX = 0;
-      this.oldY = 0;
+      this.oldX = x;
+      this.oldY = y;
       this.x = 0;
       this.y = 0;
       this.x2 = x;

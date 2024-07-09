@@ -10,12 +10,12 @@ import { badWords } from "./badWords";
 import { ObjectManager } from "./Buildings/BuildingManager";
 
 import { projectileManager } from "./Projectiles/ProjectileManager";
-import { findPlayerBySid } from "./UTILS/FindPlayerBySID";
 
 import { Notification } from "./Notification";
+
 import { getDistance } from "./UTILS/GetDistance";
 import { getDirection } from "./UTILS/GetDirection";
-import { platform } from "os";
+import { Player } from "./Players/Player";
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -83,8 +83,6 @@ class WS extends Msgpack {
     const parsed: any = this.decode(data);
     const type: string = parsed[0];
     const packetData: any[] = parsed[1];
-
-    //console.log(type);
 
     if (type === "A") {
       // SET INIT DATA:
@@ -244,8 +242,8 @@ export class Game extends WS {
             Game.camXY.x += camSpeed * Math.cos(camDirection);
             Game.camXY.y += camSpeed * Math.sin(camDirection);
           } else {
-            Game.camXY.x = Game.playerXY.x2;
-            Game.camXY.y = Game.playerXY.y2;
+            Game.camXY.x = Game.playerXY.x;
+            Game.camXY.y = Game.playerXY.y;
           }
   
           let rate = 170;
@@ -257,7 +255,9 @@ export class Game extends WS {
           Game.playerXY.y = Players.myPlayer.oldY + (tmpDiff * tmpRate);
           Game.xOffset = Game.camXY.x - (1920 / 2);
           Game.yOffset = Game.camXY.y - (1080 / 2);
-  
+
+          console.log(Game.xOffset);
+
           this.ctx.beginPath();
           this.ctx.fillStyle = "#ff0000";
           this.ctx.arc(200 - Game.xOffset, 200 - Game.yOffset, 50, 0, Math.PI * 2);
