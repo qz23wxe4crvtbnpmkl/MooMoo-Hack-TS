@@ -15,6 +15,9 @@ import { Notification } from "./Notification";
 
 import { getDistance } from "./UTILS/GetDistance";
 import { getDirection } from "./UTILS/GetDirection";
+import { min } from "./Math";
+import { PI } from "./Math";
+
 import { Player } from "./Players/Player";
 
 /**
@@ -236,7 +239,7 @@ export class Game extends WS {
   
           let camDistance = getDistance(Game.camXY, oldCamXY, 0, 0);
           let camDirection = getDirection(Game.camXY, oldCamXY);
-          let camSpeed = Math.min(camDistance * 0.01 * Game.delta, camDistance);
+          let camSpeed = min(camDistance * 0.01 * Game.delta, camDistance);
   
           if (camDistance > 0.05) {
             Game.camXY.x += camSpeed * Math.cos(camDirection);
@@ -248,7 +251,7 @@ export class Game extends WS {
   
           let rate = 170;
           Players.myPlayer.delta += Game.delta;
-          let tmpRate = Math.min(1.7, Players.myPlayer.delta / rate);
+          let tmpRate = min(1.7, Players.myPlayer.delta / rate);
           let tmpDiff = (Players.myPlayer.x2 - Players.myPlayer.oldX);
           Game.playerXY.x = Players.myPlayer.oldX + (tmpDiff * tmpRate);
           tmpDiff = (Players.myPlayer.y2 - Players.myPlayer.oldY);
@@ -256,17 +259,15 @@ export class Game extends WS {
           Game.xOffset = Game.camXY.x - (1920 / 2);
           Game.yOffset = Game.camXY.y - (1080 / 2);
 
-          console.log(Game.xOffset);
+          var M = this.ctx;
 
-          this.ctx.beginPath();
-          this.ctx.fillStyle = "#ff0000";
-          this.ctx.arc(200 - Game.xOffset, 200 - Game.yOffset, 50, 0, Math.PI * 2);
-          this.ctx.fill();
-  
-          this.ctx.beginPath(); // added this line
-          this.ctx.arc(Players.myPlayer.x2 - Game.xOffset, Players.myPlayer.y2 - Game.yOffset, 50, 0, Math.PI * 2);
-          this.ctx.fill();
-          }
+          M.beginPath();
+          M.fillStyle = "red";
+          M.arc(0 - Game.xOffset, 0 - Game.yOffset, 80, 0, Math.PI * 2);
+          M.fill();
+          M.arc(Game.playerXY.x - Game.xOffset, Game.playerXY.y - Game.yOffset, 90, 0, PI * 2);
+          M.fill();
+        }
       }
     }
   }
@@ -419,12 +420,23 @@ pointer-events: none;
   new Notification("Welcome Onion", 2500, "rgba(20, 0, 0, 0.6)");
 };
 
+window.requestAnimFrame = (function () {
+  return (
+      window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      function (e: any) {
+          window.setTimeout(e, 1e3 / 9);
+      }
+  );
+})();
+
 var lastUpdate = 0;
 function Loop() {
   Game.delta = Date.now() - lastUpdate;
   lastUpdate = Date.now();
   Game.updateGame();
-  window.requestAnimationFrame(Loop);
+  requestAnimFrame(Loop)
 }
 
 Loop();
