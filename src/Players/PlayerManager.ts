@@ -6,6 +6,8 @@ import { updatePlayer } from "./updatePlayer"; // Import function to update a pl
 
 import { Player } from "./Player"; // Import player class
 
+import { Game } from "../Game";
+
 /**
  * Player Manager class
  *
@@ -126,11 +128,28 @@ export class Players {
       tmpPlayer.visible = false;
     }
 
-    for (let i = 0; i < data.length; i += 13) {
-      const tmpPlayer: any = findPlayerBySid(data[0]);
+    for (let index = 0; index < data.length; index += 13) {
+      const player: any = findPlayerBySid(data[0]);
 
-      if (tmpPlayer) {
-        updatePlayer(tmpPlayer, data, i);
+      if (player) {
+        player.t1 = player.t2 === void 0 ? Date.now() : player.t2;
+        player.t2 = Date.now();
+        player.oldX = Game.playerXY.x2;
+        player.oldY = Game.playerXY.y2;
+        player.x2 = data[index + 1];
+        player.y2 = data[index + 2];
+        player.d1 = player.d2 === void 0 ? data[index + 3] : player.d2;
+        player.delta = 0;
+        player.weaponIndex = data[index + 5];
+        player.weaponIndex < 9 && (player.weapons[0] = player.weaponIndex);
+        player.weaponIndex >= 9 && (player.weapons[1] = player.weaponIndex);
+        player.weaponVariant = data[index + 6];
+        player.team = data[index + 7];
+        player.lastSkinIndex = player.skinIndex;
+        player.skinIndex = data[index + 9];
+        player.lastTailIndex = player.tailIndex;
+        player.tailIndex = data[index + 10];
+        player.visible = true;      
       }
     }
   }

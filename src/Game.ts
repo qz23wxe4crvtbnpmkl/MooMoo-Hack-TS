@@ -15,6 +15,7 @@ import { findPlayerBySid } from "./UTILS/FindPlayerBySID";
 import { Notification } from "./Notification";
 import { getDistance } from "./UTILS/GetDistance";
 import { getDirection } from "./UTILS/GetDirection";
+import { platform } from "os";
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -106,7 +107,11 @@ class WS extends Msgpack {
     } else if (type === "a") {
       // UPDATE PLAYERS:
 
+      console.log(packetData);
       Players.updatePlayers(packetData);
+
+      // temp just to make sure shit works
+      Players.myPlayer.delta = 0;
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
@@ -194,21 +199,21 @@ export class Game extends WS {
   public enemies: any[] = [];
   public teammates: any[] = [];
   
-  public canvas: any = false;
-  public ctx: any = false;
+  public static canvas: any = false;
+  public static ctx: any = false;
 
-  public camXY: any = {
+  public static camXY: any = {
     x: 0,
     y: 0
   };
-  public playerXY: any = {
+  public static playerXY: any = {
     x: 0,
     y: 0
   };
-  public delta: number = 0;
+  public static delta: number = 0;
 
-  public xOffset: number = 0;
-  public yOffset: number = 0;
+  public static xOffset: number = 0;
+  public static yOffset: number = 0;
 
   /**
    * The singleton instance of the Game class
@@ -227,39 +232,49 @@ export class Game extends WS {
     return Game.instance;
   }
 
-  public updateGame() {
-    if(this.canvas) {
-      if(!this.ctx) {
-        this.ctx = this.canvas.getContext("2d");
-      } else {
-        var oldCamXY = this.camXY;
+  public static updateGame(): void {
+    if (Players.myPlayer) {
+      if (Game.canvas) {
+        if (!this.ctx) {
+          this.ctx = Game.canvas.getContext("2d");
+        } else {
+          let oldCamXY = Game.camXY;
+  
+          let camDistance = getDistance(Game.camXY, oldCamXY, 0, 0);
+          let camDirection = getDirection(Game.camXY, oldCamXY);
+          let camSpeed = Math.min(camDistance * 0.01 * Game.delta, camDistance);
+  
+          if (camDistance > 0.05) {
+            Game.camXY.x += camSpeed * Math.cos(camDirection);
+            Game.camXY.y += camSpeed * Math.sin(camDirection);
+          } else {
+            Game.camXY.x = Game.playerXY.x2;
+            Game.camXY.y = Game.playerXY.y2;
+          }
 
-        let camDistance = getDistance(this.camXY, oldCamXY, 0, 0);
-        let camDirection = getDirection(this.camXY, oldCamXY);
-        let camSpeed = Math.min(camDistance * 0.01 * this.delta, camDistance);
+          console.log(Game.camXY, Game.playerXY, Game.delta);
+  
+          let rate = 170;
+          Players.myPlayer.delta += Game.delta;
+          let tmpRate = Math.min(1.7, Players.myPlayer.delta / rate);
+          let tmpDiff = (Players.myPlayer.x2 - Players.myPlayer.oldX);
+          Game.playerXY.x = Players.myPlayer.oldX + (tmpDiff * tmpRate);
+          tmpDiff = (Players.myPlayer.y2 - Players.myPlayer.oldY);
+          Game.playerXY.y = Players.myPlayer.oldY + (tmpDiff * tmpRate);
+          Game.xOffset = Game.camXY.x - (1920 / 2);
+          Game.yOffset = Game.camXY.y - (1080 / 2);
 
-        if (camDistance > 0.05) {
-          this.camXY.x += camSpeed * Math.cos(camDirection);
-          this.camXY.y += camSpeed * Math.sin(camDirection);
-      } else {
-          this.camXY.x = this.playerXY.x;
-          this.camXY.y = this.playerXY.y;
-      }
-
-        let rate = 170;
-        Players.myPlayer.delta += this.delta;
-        let tmpRate = Math.min(1.7, Players.myPlayer.delta / rate);
-        let tmpDiff = (Players.myPlayer.x - Players.myPlayer.oldX);
-        this.playerXY.x = Players.myPlayer.oldX + (tmpDiff * tmpRate);
-        tmpDiff = (Players.myPlayer.y - Players.myPlayer.oldY);
-        this.playerXY.y = Players.myPlayer.oldY + (tmpDiff * tmpRate);
-        this.xOffset = this.camXY.x - (1920 / 2);
-        this.yOffset = this.camXY.y - (1080 / 2);
-
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "#ff0000";
-        this.ctx.arc(0, 0, 50, 0, Math.PI * 2);
-        this.ctx.fill();
+          console.warn(Players.myPlayer.x2, Players.myPlayer.y2);
+  
+          this.ctx.beginPath();
+          this.ctx.fillStyle = "#ff0000";
+          this.ctx.arc(200 - Game.xOffset, 200 - Game.yOffset, 50, 0, Math.PI * 2);
+          this.ctx.fill();
+  
+          this.ctx.beginPath(); // added this line
+          this.ctx.arc(Players.myPlayer.x2 - Game.xOffset, Players.myPlayer.y2 - Game.yOffset, 50, 0, Math.PI * 2);
+          this.ctx.fill();
+          }
       }
     }
   }
@@ -268,6 +283,7 @@ export class Game extends WS {
 var Mod = Game.getInstance();
 
 window.onload = function () {
+  Game.canvas = document.getElementById("gameCanvas");
   document.getElementById("gameName").innerHTML = `
 <img src="https://cdn.glitch.global/1d1dafa9-ba5a-47e7-a4e7-bcbf0851583d/%5Bremoval.ai%5D_f5b07bfb-d250-4a8f-8714-2b5f4e5af3d2-banner.png?v=1720093338201" style="width: 500px; height: 250px">
 `;
@@ -407,6 +423,16 @@ pointer-events: none;
   document.getElementById("ageBarContainer").remove();
   document.getElementById("diedText").remove();
 
-  new Notification("MooMoo TS Loaded!", 2500, "rgba(45, 121, 199, 0.2)");
-  new Notification("Welcome Onion!", 2500, "rgba(0, 0, 40, 0.2)");
+  new Notification("MooMoo TS Loaded!", 2500, "rgba(45, 121, 199, 0.4)");
+  new Notification("Welcome Onion", 2500, "rgba(20, 0, 0, 0.6)");
 };
+
+var lastUpdate = 0;
+function Loop() {
+  Game.delta = Date.now() - lastUpdate;
+  lastUpdate = Date.now();
+  Game.updateGame();
+  window.requestAnimationFrame(Loop);
+}
+
+Loop();
