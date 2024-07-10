@@ -260,13 +260,12 @@ export class Game extends WS {
           Game.yOffset = Game.camXY.y - (1080 / 2);
 
           var M = this.ctx;
-
-          M.beginPath();
-          M.fillStyle = "red";
-          M.arc(0 - Game.xOffset, 0 - Game.yOffset, 80, 0, Math.PI * 2);
-          M.fill();
-          M.arc(Game.playerXY.x - Game.xOffset, Game.playerXY.y - Game.yOffset, 90, 0, PI * 2);
-          M.fill();
+          ObjectManager.Buildings.forEach((building) => {
+            M.beginPath();
+            M.fillStyle = "rgba(200, 0, 0, 0.3)";
+            M.arc(building.x - Game.xOffset, building.y - Game.yOffset, building.scale, 0, PI * 2);
+            M.fill();
+          })
         }
       }
     }
@@ -426,7 +425,7 @@ window.requestAnimFrame = (function () {
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       function (e: any) {
-          window.setTimeout(e, 1e3 / 9);
+          window.setTimeout(e, 1e3 / 60);
       }
   );
 })();
