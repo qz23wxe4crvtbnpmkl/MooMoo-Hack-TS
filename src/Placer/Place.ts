@@ -5,10 +5,10 @@ import { Packets } from "../UTILS/Packets";
 
 var ws = new WS;
 
-export class Placer {
+export default class Placer {
     static placementsThisTick: number = 0;
 
-    place(objType: number, dir: number) {
+    static place(objType: number, dir: number) {
         var weaponIndx = Players.myPlayer.weaponIndex;
         Packets.Equip(objType, false);
         ws.send("d", 1, dir, 1);

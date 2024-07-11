@@ -17,7 +17,7 @@ export function getDirection(obj1: any, obj2: any) {
    * Uses the atan2 function to calculate the direction
    * atan2(y, x) returns the angle in radians from the x-axis to the point (x, y)
    */
-  return atan2(obj1.y - obj2.y, obj1.x - obj2.x);
+  return atan2(obj1.y2 - obj2.y, obj1.x2 - obj2.x);
 }
 
 //this needs to be redone to account for x2/y2

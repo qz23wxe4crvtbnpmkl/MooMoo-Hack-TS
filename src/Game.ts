@@ -18,7 +18,7 @@ import { getDirection } from "./UTILS/GetDirection";
 import { min } from "./Math";
 import { PI } from "./Math";
 
-import { Player } from "./Players/Player";
+import AutoMill from "./Placer/AutoMill";
 
 /**
  * A class for encoding and decoding data using MessagePack
@@ -109,6 +109,7 @@ export class WS extends Msgpack {
       // UPDATE PLAYERS:
 
       Players.updatePlayers(packetData[0]);
+      AutoMill.place();
     } else if (type === "H") {
       // LOAD GAME OBJECT:
 
