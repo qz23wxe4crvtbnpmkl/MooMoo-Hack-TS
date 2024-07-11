@@ -134,10 +134,12 @@ export class Players {
       if (player) {
         player.t1 = player.t2 === void 0 ? Date.now() : player.t2;
         player.t2 = Date.now();
-        player.oldX = player.x2;
-        player.oldY = player.y2;
         player.x2 = data[index + 1];
         player.y2 = data[index + 2];
+        //player.oldX = player.x2;
+        //player.oldY = player.y2;
+        player.oldX = Game.playerXY.x;
+        player.oldY = Game.playerXY.y;
         player.d1 = player.d2 === void 0 ? data[index + 3] : player.d2;
         player.delta = 0;
         player.weaponIndex = data[index + 5];

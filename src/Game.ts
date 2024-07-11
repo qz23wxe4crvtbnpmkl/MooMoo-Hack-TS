@@ -48,7 +48,7 @@ class Msgpack {
 /**
  * A class for handling WebSocket connections and sending/receiving packets
  */
-class WS extends Msgpack {
+export class WS extends Msgpack {
   /**
    * The WebSocket object
    */
@@ -262,8 +262,8 @@ export class Game extends WS {
           var M = this.ctx;
           ObjectManager.Buildings.forEach((building) => {
             M.beginPath();
-            M.fillStyle = "rgba(200, 0, 0, 0.3)";
-            M.arc(building.x - Game.xOffset, building.y - Game.yOffset, building.scale, 0, PI * 2);
+            M.fillStyle = "rgba(200, 0, 0, 0.05)";
+            M.arc(building.x - Game.xOffset, building.y - Game.yOffset, building.scale + 5 /* Padding */, 0, PI * 2);
             M.fill();
           })
         }
