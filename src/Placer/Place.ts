@@ -1,17 +1,12 @@
 import { Players } from "../Players/PlayerManager";
-import { WS } from "../Game";
-
 import { Packets } from "../UTILS/Packets";
-
-var ws = new WS;
-
 export default class Placer {
-    static placementsThisTick: number = 0;
+  public static placementsThisTick: number = 0;
 
-    static place(objType: number, dir: number) {
-        var weaponIndx = Players.myPlayer.weaponIndex;
-        Packets.Equip(objType, false);
-        ws.send("d", 1, dir, 1);
-        Packets.Equip(weaponIndx, true);
-    }
+  static place(objType: number, dir: number) {
+    const weaponIndx = Players.myPlayer;
+    Packets.Equip(objType, false);
+    Packets.sendBuild(dir);
+    Packets.Equip(weaponIndx, true);
+  }
 }

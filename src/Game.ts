@@ -54,12 +54,8 @@ export class WS extends Msgpack {
    */
   public ws: WebSocket | null;
 
-  /**
-   * Constructor
-   */
   constructor() {
     super();
-    this.ws = null;
   }
 
   /**
@@ -224,10 +220,7 @@ export class Game extends WS {
    * @returns {Game} The singleton instance
    */
   public static getInstance(): Game {
-    if (!Game.instance) {
-      Game.instance = new Game();
-    }
-    return Game.instance;
+    return Game.instance || (Game.instance = new Game());
   }
 
   public static updateGame(): void {
@@ -273,7 +266,9 @@ export class Game extends WS {
   }
 }
 
-var Mod = Game.getInstance();
+export function getInstance(): Game {
+  return new Game();
+}
 
 window.onload = function () {
   Game.canvas = document.getElementById("gameCanvas");

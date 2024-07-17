@@ -1,6 +1,5 @@
-import { WS } from "../Game"
-var ws = new WS;
-
+import { getInstance } from "../Game";
+const ws: any = getInstance();
 class SendHit {
     static hasHit: boolean = false;
 
@@ -51,6 +50,9 @@ const Packets = {
             moofoll: moofoll,
             skin: skin
         })
+    },
+    sendBuild: function (dir: number) {
+        ws.send("d", 1, dir, 1);
     }
 };
 
